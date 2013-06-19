@@ -18,5 +18,7 @@ public class SingleField extends Board {
 	public void reset() {
 		state=FieldState.Neutral;
 	}
+	
+	//blabla
 
 }
