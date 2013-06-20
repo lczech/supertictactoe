@@ -30,6 +30,7 @@ public class Game implements Runnable {
 			if (players[activeplayer].makeMove(board)) {
 				if (board.isWon(board.boards, board.getLastMove().SuperMove, players[activeplayer].type)) {
 					winner = players[activeplayer];
+					board.State = players[activeplayer].type;
 				}
 				//
 				if (bview != null) {

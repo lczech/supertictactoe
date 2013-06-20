@@ -23,8 +23,8 @@ public class Main {
 		BoardView bview = new BoardView();
 		f.add(bview);
 		
-		players[0] = new RandomPlayer(TTT.Type.X);
-		players[1] = new HumanPlayer(TTT.Type.O, bview);//new RandomPlayer(TTT.Type.O);
+		players[1] = new RandomPlayer(TTT.Type.X);
+		players[0] = new HumanPlayer(TTT.Type.O, bview);//new RandomPlayer(TTT.Type.O);
 		
 		
 		game = new Game(players[0], players[1]);

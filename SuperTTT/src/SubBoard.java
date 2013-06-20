@@ -1,5 +1,6 @@
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SubBoard extends TTT {
@@ -20,6 +21,17 @@ public class SubBoard extends TTT {
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	public List<Integer> getPossibleFields() {
+		List<Integer> l = new ArrayList<Integer>();
+		for (int i=0; i<9; i++) {
+			if(this.fields[i].isOpen()) {
+				l.add(i);
+			}
+		}
+		return l;
 	}
 	
 	public void addMoves(List<Move> target, int supermove) {
@@ -47,8 +59,8 @@ public class SubBoard extends TTT {
 	}
 
 	@Override
-	public void draw(Graphics g, Rectangle rect) {
-		drawBoard(g, rect, fields, false);
+	public void draw(Graphics g, Rectangle rect, boolean active) {
+		drawBoard(g, rect, fields, active);
 		drawState(g, rect);
 	}
 

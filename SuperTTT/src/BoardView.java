@@ -72,7 +72,7 @@ public class BoardView extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (board!=null){
-			board.draw(g, new Rectangle(0,0,500,500));			
+			board.draw(g, new Rectangle(0,0,500,500), false);			
 		}
 	}
 

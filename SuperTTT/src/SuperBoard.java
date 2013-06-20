@@ -50,6 +50,17 @@ public class SuperBoard extends TTT {
 		return list;
 	}
 	
+	@Override
+	public List<Integer> getPossibleFields() {
+		List<Integer> l = new ArrayList<Integer>();
+		for (Move m: getPossibleMoves()) {
+			if(!l.contains(m.SuperMove)) {
+				l.add(m.SuperMove);
+			}
+		}
+		return l;
+	}
+	
 	public boolean makeMove(Move move, TTT.Type player) {
 		Move lastmove = getLastMove();
 		boolean result = ((lastmove == null || lastmove.SubMove==move.SuperMove) && this.boards[move.SuperMove].makeMove(move.SubMove, player));
@@ -57,7 +68,7 @@ public class SuperBoard extends TTT {
 		return result;
 	}
 
-	public void draw(Graphics g, Rectangle rect) {
+	public void draw(Graphics g, Rectangle rect, boolean active) {
 		drawBoard(g, rect, boards, false);
 		drawState(g, rect);
 	}

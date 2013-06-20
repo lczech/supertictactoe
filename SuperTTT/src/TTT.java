@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.List;
 
 
 public abstract class TTT {
@@ -23,6 +24,8 @@ public abstract class TTT {
 	}
 	
 	abstract public boolean isOpen();
+	
+	abstract public List<Integer> getPossibleFields();
 	
 	public boolean isWon(TTT[] board, int lastmove, TTT.Type player) {
 		boolean won = false;
@@ -86,7 +89,7 @@ public abstract class TTT {
 		return won;
 	}
 	
-	abstract public void draw(Graphics g, Rectangle rect);
+	abstract public void draw(Graphics g, Rectangle rect, boolean active);
 	
 	public void drawState(Graphics g, Rectangle rect) {
 		rect.x      += 0.15 * rect.width;
@@ -161,7 +164,7 @@ public abstract class TTT {
 		subrects[8] = new Rectangle(x2,y2,w,h);
 		
 		for (int i=0;i<9;i++) {
-			fields[i].draw(g, subrects[i]);
+			fields[i].draw(g, subrects[i], this.getPossibleFields().contains(i));
 		}
 	}
 
