@@ -36,12 +36,13 @@ public class SubBoard extends TTT {
 		
 		if(isWon(fields, field, player)) {
 			System.out.println("WON WON WON");
+			this.State = player;
 		}
 	}
 
 	@Override
 	public void draw(Graphics g, Rectangle rect) {
-		drawBoard(g, rect, fields);
+		drawBoard(g, rect, fields, false);
 		drawState(g, rect);
 	}
 

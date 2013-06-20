@@ -1,7 +1,6 @@
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-
 public class Field extends TTT {
 	
 	public boolean isOpen() {

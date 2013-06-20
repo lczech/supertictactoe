@@ -6,14 +6,14 @@ import java.util.List;
 public class SuperBoard extends TTT {
 	
 	private SubBoard[] boards;
-	private Move lastMove;
+	private List<Move> history;
 
 	public SuperBoard() {
 		this.boards = new SubBoard[9];
 		for (int i=0; i<9; i++) {
 			this.boards[i] = new SubBoard();
 		}
-		this.lastMove = null;
+		this.history = new ArrayList<Move>();
 	}
 	
 	public boolean isOpen() {
@@ -28,12 +28,12 @@ public class SuperBoard extends TTT {
 	public List<Move> getMoves() {
 		List<Move> list = new ArrayList<Move>();
 		
-		if(this.lastMove == null) {
+		if(this.history.size() == 0) {
 			for (int i=0; i<9; i++) {
 				boards[i].addMoves(list, i);
 			}
 		} else {
-			int s = this.lastMove.SubMove;
+			int s = this.history.get(this.history.size()-1).SubMove;
 			if (boards[s].isOpen()) {
 				boards[s].addMoves(list, s);
 			} else {
@@ -47,12 +47,12 @@ public class SuperBoard extends TTT {
 	}
 	
 	public void makeMove(Move move, TTT.Type player) {
-		this.lastMove = move;
+		this.history.add(move);
 		this.boards[move.SuperMove].makeMove(move.SubMove, player);
 	}
 
 	public void draw(Graphics g, Rectangle rect) {
-		drawBoard(g, rect, boards);
+		drawBoard(g, rect, boards, false);
 		drawState(g, rect);
 	}
 	
