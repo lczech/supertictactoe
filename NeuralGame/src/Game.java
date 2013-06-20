@@ -1,10 +1,10 @@
 
 public class Game {
-	private Board    board;
+	private TicTacToeBoard board;
 	private Player[] player = new Player[2];
 	private int      activePlayer = 0;
 
-	public Game(Board b, Player p1, Player p2) {
+	public Game(TicTacToeBoard b, Player p1, Player p2) {
 		this.board     = b;
 		this.player[0] = p1;
 		this.player[1] = p2;

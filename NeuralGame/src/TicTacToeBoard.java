@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.List;
 import java.util.Random;
 
 import org.w3c.dom.css.Rect;
@@ -9,6 +10,14 @@ import org.w3c.dom.css.Rect;
 public class TicTacToeBoard extends Board {
 
 	Board[] fields;
+	
+	public List<Move> getPossibleMoves() {
+		return null;
+	}
+	
+	public void makeMove(Move m) {
+		fields[m.getCurrentPosition()].makeMove(m.getSubMove());
+	}
 	
 	public TicTacToeBoard(Board[] fields) {
 		if (fields.length != 9) {
@@ -21,6 +30,11 @@ public class TicTacToeBoard extends Board {
 	@Override
 	public void draw(Graphics g, Rectangle rect) {
 
+		rect.height -= 20;
+		rect.width -= 20;
+		rect.x += 10;
+		rect.y += 10;
+		
 		int w=rect.width/3;
 		int h=rect.height/3;
 		
@@ -34,10 +48,12 @@ public class TicTacToeBoard extends Board {
 		int y2 = rect.y+(rect.height*2)/3;
 		int y3 = rect.y+(rect.height*3)/3;
 		
-		g.drawLine(x0, y1, x3, y1);
-		g.drawLine(x0, y2, x3, y2);
-		g.drawLine(x1, y0, x1, y3);
-		g.drawLine(x2, y0, x2, y3);
+		int bw=0;
+		
+		g.drawLine(x0+bw, y1, x3-bw, y1);
+		g.drawLine(x0+bw, y2, x3-bw, y2);
+		g.drawLine(x1, y0+bw, x1, y3-bw);
+		g.drawLine(x2, y0+bw, x2, y3-bw);
 		
 		Rectangle[] subrects = new Rectangle[9];
 		subrects[0] = new Rectangle(x0,y0,w,h);

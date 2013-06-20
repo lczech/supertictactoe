@@ -9,6 +9,8 @@ public abstract class Board {
 	public abstract void draw(Graphics g, Rectangle rect);
 	protected FieldState state = FieldState.Neutral;
 	
+	public abstract void makeMove(Move m);
+	
 	public abstract void reset();
 	
 	public FieldState getState() {
