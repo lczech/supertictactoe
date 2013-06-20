@@ -6,7 +6,6 @@ public class HumanPlayer extends Player {
 
 	public HumanPlayer(TTT.Type t, BoardView bview) {
 		super(t);
-		// TODO Auto-generated constructor stub
 		this.bview = bview;
 		bview.registerHumanPlayer(this);
 	}
@@ -20,15 +19,11 @@ public class HumanPlayer extends Player {
 				e.printStackTrace();
 			}
 		}
-		//return move;
-		//System.out.println("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-		sb.makeMove(move, this.type);
-		return true;
+		return sb.makeMove(move, this.type);
 	}
 	
 	public void setMove(Move move) {
 		this.move=move;
-		//System.out.println("aaaaaaaaaaaaaaaaaaa");
 	}
 
 }

@@ -29,27 +29,17 @@ public class BoardView extends JPanel {
 			
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				System.out.println("bla");
 				int x=arg0.getX();
 				int y=arg0.getY();
-				System.out.println(x);
-				System.out.println(y);
 				x-=50;
 				y-=50;
 				x/=(400/9);
 				y/=(400/9);
-				System.out.println(x);
-				System.out.println(y);
 				for (HumanPlayer p: players){
 					int superx=x/3;
 					int supery=y/3;
-					System.out.println(superx);
-					System.out.println(supery);
-					//p.setMove(move);
 					int subx = x-superx*3;
 					int suby = y-supery*3;
-					System.out.println(subx);
-					System.out.println(suby);
 					Move m = new Move(superx+3*supery, subx+3*suby);
 					synchronized(p){	
 						p.setMove(m);

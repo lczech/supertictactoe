@@ -17,7 +17,7 @@ public class SuperBoard extends TTT {
 	}
 	
 	public Move getLastMove() {
-		return history.get(history.size()-1);
+		return history.size()>0? history.get(history.size()-1) : null;
 	}
 	
 	public boolean isOpen() {
@@ -51,7 +51,8 @@ public class SuperBoard extends TTT {
 	}
 	
 	public boolean makeMove(Move move, TTT.Type player) {
-		boolean result = (true && this.boards[move.SuperMove].makeMove(move.SubMove, player));
+		Move lastmove = getLastMove();
+		boolean result = ((lastmove == null || lastmove.SubMove==move.SuperMove) && this.boards[move.SuperMove].makeMove(move.SubMove, player));
 		if (result) history.add(move);
 		return result;
 	}
