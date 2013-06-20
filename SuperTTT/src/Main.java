@@ -19,8 +19,8 @@ public class Main {
 		
 		//superboard.draw(f.getRootPane().getGraphics(), new Rectangle(50, 50, 250, 250));
 		
-		players[0] = new RandomPlayer(Player.PlayerType.Player1);
-		players[1] = new RandomPlayer(Player.PlayerType.Player2);
+		players[0] = new RandomPlayer(TTT.Type.X);
+		players[1] = new RandomPlayer(TTT.Type.O);
 		
 		f.addMouseListener(new MouseListener() {
 			

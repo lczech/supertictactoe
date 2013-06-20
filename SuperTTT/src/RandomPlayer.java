@@ -5,7 +5,7 @@ public class RandomPlayer extends Player {
 	
 	Random r = new Random();
 
-	public RandomPlayer(PlayerType t) {
+	public RandomPlayer(TTT.Type t) {
 		super(t);
 	}
 

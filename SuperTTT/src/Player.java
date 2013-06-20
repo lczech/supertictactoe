@@ -1,11 +1,9 @@
 
 public abstract class Player {
 	
-	public static enum PlayerType {Player1, Player2};
+	public TTT.Type type;
 	
-	public PlayerType type;
-	
-	public Player(PlayerType t) {
+	public Player(TTT.Type t) {
 		this.type = t;
 	}
 	
