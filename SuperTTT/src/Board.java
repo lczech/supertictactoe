@@ -13,6 +13,12 @@ public class Board {
 		}
 	}
 	
+	public Field.FieldState State() {
+		
+		
+		return Field.FieldState.Neutral;
+	}
+	
 	public boolean isOpen() {
 		for (int i=0; i<9; i++) {
 			if(this.fields[i].isOpen()) {
@@ -30,11 +36,84 @@ public class Board {
 		}
 	}
 	
-	public void makeMove(int field, int player) {
-		if(player==0) {
-			this.fields[field].State = Field.FieldState.Player1;
-		} else {
-			this.fields[field].State = Field.FieldState.Player1;
+	public void makeMove(int field, Player.PlayerType player) {
+		Field.FieldState fs = Field.FieldState.Neutral;
+		
+		switch (player) {
+		case Player1:
+			fs  = Field.FieldState.Player1;
+			break;
+			
+		case Player2:
+			fs = Field.FieldState.Player2;
+			break;
+
+		default:
+			break;
+		}
+		
+		this.fields[field].State = fs;
+		System.out.println(field);
+		
+		boolean won = false;
+		switch (field) {
+		case 0:
+			won |= fields[1].State == fs && fields[2].State == fs;
+			won |= fields[3].State == fs && fields[6].State == fs;
+			won |= fields[4].State == fs && fields[8].State == fs;
+			break;
+			
+		case 1:
+			won |= fields[0].State == fs && fields[2].State == fs;
+			won |= fields[4].State == fs && fields[7].State == fs;
+			break;
+			
+		case 2:
+			won |= fields[0].State == fs && fields[1].State == fs;
+			won |= fields[5].State == fs && fields[8].State == fs;
+			won |= fields[4].State == fs && fields[6].State == fs;
+			break;
+			
+		case 3:
+			won |= fields[0].State == fs && fields[6].State == fs;
+			won |= fields[4].State == fs && fields[5].State == fs;
+			break;
+			
+		case 4:
+			won |= fields[1].State == fs && fields[7].State == fs;
+			won |= fields[3].State == fs && fields[5].State == fs;
+			won |= fields[0].State == fs && fields[8].State == fs;
+			won |= fields[2].State == fs && fields[6].State == fs;
+			break;
+			
+		case 5:
+			won |= fields[2].State == fs && fields[8].State == fs;
+			won |= fields[3].State == fs && fields[4].State == fs;
+			break;
+			
+		case 6:
+			won |= fields[0].State == fs && fields[3].State == fs;
+			won |= fields[7].State == fs && fields[8].State == fs;
+			won |= fields[4].State == fs && fields[2].State == fs;
+			break;
+			
+		case 7:
+			won |= fields[1].State == fs && fields[4].State == fs;
+			won |= fields[6].State == fs && fields[8].State == fs;
+			break;
+			
+		case 8:
+			won |= fields[6].State == fs && fields[7].State == fs;
+			won |= fields[2].State == fs && fields[5].State == fs;
+			won |= fields[0].State == fs && fields[4].State == fs;
+			break;
+			
+		default:
+			break;
+		}
+		
+		if(won) {
+			System.out.println("WON WON WON");
 		}
 	}
 	

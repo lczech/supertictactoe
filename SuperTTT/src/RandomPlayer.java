@@ -1,22 +1,18 @@
 import java.util.List;
 import java.util.Random;
 
-
 public class RandomPlayer extends Player {
 	
 	Random r = new Random();
 
-	public RandomPlayer(SuperBoard sb) {
-		super(sb);
+	public RandomPlayer(PlayerType t) {
+		super(t);
 	}
 
 	@Override
-	void makeMove() {
-		List<Move> moves = this.superboard.getMoves();
-		System.out.println("count " + moves.size());
-		int m = (r.nextInt() % moves.size() + moves.size()) % moves.size();
-		System.out.println("m " + m);
-		this.superboard.makeMove(moves.get(m), 0);
+	void makeMove(SuperBoard sb) {
+		List<Move> moves = sb.getMoves();
+		sb.makeMove(moves.get(r.nextInt(moves.size())), this.type);
 	}
 
 }

@@ -16,6 +16,15 @@ public class SuperBoard {
 		this.lastMove = null;
 	}
 	
+	public boolean isOpen() {
+		for (int i=0; i<9; i++) {
+			if(boards[i].isOpen()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public List<Move> getMoves() {
 		List<Move> list = new ArrayList<Move>();
 		
@@ -37,7 +46,7 @@ public class SuperBoard {
 		return list;
 	}
 	
-	public void makeMove(Move move, int player) {
+	public void makeMove(Move move, Player.PlayerType player) {
 		this.lastMove = move;
 		this.boards[move.SuperMove].makeMove(move.SubMove, player);
 	}

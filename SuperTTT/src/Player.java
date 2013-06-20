@@ -1,10 +1,14 @@
 
 public abstract class Player {
-	SuperBoard superboard;
 	
-	public Player(SuperBoard sb) {
-		this.superboard = sb;
+	public static enum PlayerType {Player1, Player2};
+	
+	public PlayerType type;
+	
+	public Player(PlayerType t) {
+		this.type = t;
 	}
 	
-	abstract void makeMove();
+	abstract void makeMove(SuperBoard sb);
+	
 }

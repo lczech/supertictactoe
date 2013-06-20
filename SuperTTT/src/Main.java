@@ -4,8 +4,12 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JFrame;
 
-
 public class Main {
+	
+	static SuperBoard superboard = new SuperBoard();
+	
+	static int currplayer = 0;
+	static Player[] players = new Player[2];
 	
 	public static void main(String[] args) {
 		final JFrame f = new JFrame();
@@ -13,10 +17,10 @@ public class Main {
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		final SuperBoard superboard = new SuperBoard();
-		superboard.draw(f.getRootPane().getGraphics(), new Rectangle(50, 50, 250, 250));
+		//superboard.draw(f.getRootPane().getGraphics(), new Rectangle(50, 50, 250, 250));
 		
-		final Player rp1 = new RandomPlayer(superboard);
+		players[0] = new RandomPlayer(Player.PlayerType.Player1);
+		players[1] = new RandomPlayer(Player.PlayerType.Player2);
 		
 		f.addMouseListener(new MouseListener() {
 			
@@ -28,8 +32,9 @@ public class Main {
 			
 			@Override
 			public void mousePressed(MouseEvent arg0) {
+				players[currplayer].makeMove(superboard);
+				currplayer = (currplayer+1)%2;
 				superboard.draw(f.getRootPane().getGraphics(), new Rectangle(50, 50, 250, 250));
-				rp1.makeMove();
 			}
 			
 			@Override
