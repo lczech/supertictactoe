@@ -7,6 +7,6 @@ public abstract class Player {
 		this.type = t;
 	}
 	
-	abstract void makeMove(SuperBoard sb);
+	abstract boolean makeMove(SuperBoard sb);
 	
 }

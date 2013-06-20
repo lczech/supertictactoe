@@ -10,9 +10,14 @@ public class RandomPlayer extends Player {
 	}
 
 	@Override
-	void makeMove(SuperBoard sb) {
-		List<Move> moves = sb.getMoves();
-		sb.makeMove(moves.get(r.nextInt(moves.size())), this.type);
+	boolean makeMove(SuperBoard sb) {
+		List<Move> moves = sb.getPossibleMoves();
+		if (moves.size() > 0) {
+			sb.makeMove(moves.get(r.nextInt(moves.size())), this.type);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

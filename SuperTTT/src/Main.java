@@ -20,11 +20,16 @@ public class Main {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//superboard.draw(f.getRootPane().getGraphics(), new Rectangle(50, 50, 250, 250));
+		BoardView bview = new BoardView();
+		f.add(bview);
 		
 		players[0] = new RandomPlayer(TTT.Type.X);
-		players[1] = new RandomPlayer(TTT.Type.O);
+		players[1] = new HumanPlayer(TTT.Type.O, bview);//new RandomPlayer(TTT.Type.O);
 		
-		game = new Game(new RandomPlayer(TTT.Type.X), new RandomPlayer(TTT.Type.O));
+		
+		game = new Game(players[0], players[1]);
+		game.setBoardView(bview);
+		game.run();
 		
 		f.addMouseListener(new MouseListener() {
 			
@@ -36,9 +41,10 @@ public class Main {
 			
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				players[currplayer].makeMove(superboard);
-				currplayer = (currplayer+1)%2;
-				superboard.draw(f.getRootPane().getGraphics(), new Rectangle(50, 50, 250, 250));
+				game.run();
+				//players[currplayer].makeMove(superboard);
+				//currplayer = (currplayer+1)%2;
+				//superboard.draw(f.getRootPane().getGraphics(), new Rectangle(50, 50, 250, 250));
 			}
 			
 			@Override

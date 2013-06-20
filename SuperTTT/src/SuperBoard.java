@@ -5,7 +5,7 @@ import java.util.List;
 
 public class SuperBoard extends TTT {
 	
-	private SubBoard[] boards;
+	public SubBoard[] boards;
 	private List<Move> history;
 
 	public SuperBoard() {
@@ -14,6 +14,10 @@ public class SuperBoard extends TTT {
 			this.boards[i] = new SubBoard();
 		}
 		this.history = new ArrayList<Move>();
+	}
+	
+	public Move getLastMove() {
+		return history.get(history.size()-1);
 	}
 	
 	public boolean isOpen() {
@@ -25,7 +29,7 @@ public class SuperBoard extends TTT {
 		return false;
 	}
 	
-	public List<Move> getMoves() {
+	public List<Move> getPossibleMoves() {
 		List<Move> list = new ArrayList<Move>();
 		
 		if(this.history.size() == 0) {
@@ -46,9 +50,10 @@ public class SuperBoard extends TTT {
 		return list;
 	}
 	
-	public void makeMove(Move move, TTT.Type player) {
-		this.history.add(move);
-		this.boards[move.SuperMove].makeMove(move.SubMove, player);
+	public boolean makeMove(Move move, TTT.Type player) {
+		boolean result = (true && this.boards[move.SuperMove].makeMove(move.SubMove, player));
+		if (result) history.add(move);
+		return result;
 	}
 
 	public void draw(Graphics g, Rectangle rect) {

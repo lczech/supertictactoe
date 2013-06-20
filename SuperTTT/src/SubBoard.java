@@ -30,13 +30,19 @@ public class SubBoard extends TTT {
 		}
 	}
 	
-	public void makeMove(int field, TTT.Type player) {
-		this.fields[field].State = player;
-		System.out.println(field);
-		
-		if(isWon(fields, field, player)) {
-			System.out.println("WON WON WON");
-			this.State = player;
+	public boolean makeMove(int field, TTT.Type player) {
+		if (this.fields[field].State==TTT.Type.N) {
+			this.fields[field].State = player;
+			System.out.println(field);
+			
+			if(isWon(fields, field, player)) {
+				System.out.println("WON WON WON");
+				this.State = player;
+			}
+			
+			return true;
+		} else {
+			return false;
 		}
 	}
 
