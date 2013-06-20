@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
 
 
@@ -11,6 +12,14 @@ public abstract class TTT {
 	
 	public TTT() {
 		this.State  = TTT.Type.N;
+	}
+	
+	public int Point2Field(int x, int y) {
+		return y*3 + x;
+	}
+	
+	public Point Field2Point(int field) {
+		return new Point(field%3, field/3);
 	}
 	
 	abstract public boolean isOpen();

@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 
 public class Main {
 	
+	static Game game;
+	
 	static SuperBoard superboard = new SuperBoard();
 	
 	static int currplayer = 0;
@@ -21,6 +23,8 @@ public class Main {
 		
 		players[0] = new RandomPlayer(TTT.Type.X);
 		players[1] = new RandomPlayer(TTT.Type.O);
+		
+		game = new Game(new RandomPlayer(TTT.Type.X), new RandomPlayer(TTT.Type.O));
 		
 		f.addMouseListener(new MouseListener() {
 			
