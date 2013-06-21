@@ -1,9 +1,9 @@
 
 public abstract class Player {
 	
-	public TTT.Type type;
+	public IFieldState.FieldState type;
 	
-	public Player(TTT.Type t) {
+	public Player(IFieldState.FieldState t) {
 		this.type = t;
 	}
 	

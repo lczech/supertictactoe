@@ -4,7 +4,7 @@ public class HumanPlayer extends Player {
 	Move move;
 	BoardView bview;
 
-	public HumanPlayer(TTT.Type t, BoardView bview) {
+	public HumanPlayer(IFieldState.FieldState t, BoardView bview) {
 		super(t);
 		this.bview = bview;
 		bview.registerHumanPlayer(this);

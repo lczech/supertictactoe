@@ -28,9 +28,9 @@ public class Game implements Runnable {
 		while (board.isOpen() && winner==null) {
 			//Move s = players[activeplayer]..getMove();
 			if (players[activeplayer].makeMove(board)) {
-				if (board.isWon(board.boards, board.getLastMove().SuperMove, players[activeplayer].type)) {
+				if (TTT.isWon(board.boards, board.getLastMove().SuperMove, players[activeplayer].type)) {
 					winner = players[activeplayer];
-					board.State = players[activeplayer].type;
+					board.setState(players[activeplayer].type);
 				}
 				//
 				if (bview != null) {
