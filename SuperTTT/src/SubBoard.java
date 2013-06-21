@@ -5,7 +5,7 @@ import java.util.List;
 
 public class SubBoard extends TTT {
 	
-	private Field[] fields;
+	public Field[] fields;
 	
 	public SubBoard() {
 		this.fields = new Field[9];
