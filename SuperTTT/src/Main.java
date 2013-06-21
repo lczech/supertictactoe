@@ -23,13 +23,14 @@ public class Main {
 		BoardView bview = new BoardView();
 		f.add(bview);
 		
-		players[1] = new RandomPlayer(IFieldState.FieldState.X);
-		players[0] = new RandomPlayer(IFieldState.FieldState.O);//new HumanPlayer(IFieldState.FieldState.O, bview);//new RandomPlayer(TTT.Type.O);
+		players[0] = new RandomPlayer(IFieldState.FieldState.X);
+		players[1] = new RandomPlayer(IFieldState.FieldState.O);//new HumanPlayer(IFieldState.FieldState.O, bview);//new RandomPlayer(TTT.Type.O);
 		
 		
 		game = new Game(players[0], players[1]);
 		game.setBoardView(bview);
 		game.run();
+		
 		
 		f.addMouseListener(new MouseListener() {
 			
