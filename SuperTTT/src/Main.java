@@ -24,7 +24,7 @@ public class Main {
 		f.add(bview);
 		
 		players[1] = new RandomPlayer(IFieldState.FieldState.X);
-		players[0] = new HumanPlayer(IFieldState.FieldState.O, bview);//new RandomPlayer(TTT.Type.O);
+		players[0] = new RandomPlayer(IFieldState.FieldState.O);//new HumanPlayer(IFieldState.FieldState.O, bview);//new RandomPlayer(TTT.Type.O);
 		
 		
 		game = new Game(players[0], players[1]);
