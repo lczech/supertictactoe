@@ -1,5 +1,3 @@
-import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,18 +68,6 @@ public class SubBoard implements IFieldState {
 		} else {
 			return false;
 		}
-	}
-
-	public void draw(Graphics g, Rectangle rect, boolean active) {
-		TTT.drawBoard(g, rect, active);
-		
-		Rectangle[] subrects = TTT.getSubrects(rect);
-		for (int i=0;i<9;i++) {
-			fields[i].draw(g, subrects[i]);
-			// , this.getPossibleFields().contains(i)
-		}
-		
-		TTT.drawState(g, rect, this.state);
 	}
 
 }

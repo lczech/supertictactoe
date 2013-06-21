@@ -18,12 +18,13 @@ public class Main {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//superboard.draw(f.getRootPane().getGraphics(), new Rectangle(50, 50, 250, 250));
-		BoardView bview = new BoardView();
+		GameView bview = new GameView();
 		f.add(bview);
 		
-		players[1] = new RandomPlayer(IFieldState.FieldState.X);
-		players[0] = new RandomPlayer(IFieldState.FieldState.O);//new HumanPlayer(IFieldState.FieldState.O, bview);//new RandomPlayer(TTT.Type.O);
-		
+		//players[0] = new RandomPlayer(IFieldState.FieldState.X);
+		//players[1] = new RandomPlayer(IFieldState.FieldState.O);
+		players[0] = new HumanPlayer(IFieldState.FieldState.X, bview);
+		players[1] = new HumanPlayer(IFieldState.FieldState.O, bview);
 		
 		game = new Game(players[0], players[1]);
 		game.setBoardView(bview);

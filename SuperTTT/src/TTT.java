@@ -77,11 +77,13 @@ public class TTT {
 		return won;
 	}
 
-	public static void drawState(Graphics g, Rectangle rect, IFieldState.FieldState state) {
+	public static void drawState(Graphics g, Rectangle rect, IFieldState.FieldState state, Color color) {
 		rect.x      += 0.15 * rect.width;
 		rect.y      += 0.15 * rect.height;
 		rect.width  *= 0.7;
 		rect.height *= 0.7;
+		
+		g.setColor(color);
 		
 		switch (state) {
 		case X:
@@ -98,7 +100,7 @@ public class TTT {
 		}		
 	}
 	
-	public static void drawBoard(Graphics g, Rectangle rect, boolean active) {
+	public static void drawBoard(Graphics g, Rectangle rect, Color color) {
 		int x = (int) (rect.x + 0.1 * rect.width);
 		int y = (int) (rect.y + 0.1 * rect.height);
 		int w = (int) (0.8 * rect.width  / 3);
@@ -115,10 +117,8 @@ public class TTT {
 		int y3 = y+h*3;
 		
 		int bw=0;
-		
-		if (active) {
-			g.setColor(Color.red);
-		}
+	
+		g.setColor(color);
 		//g.drawLine(x0+bw, y1, x3-bw, y1);
 		//g.drawLine(x0+bw, y2, x3-bw, y2);
 		//g.drawLine(x1, y0+bw, x1, y3-bw);

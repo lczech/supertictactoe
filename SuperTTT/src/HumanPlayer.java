@@ -2,12 +2,12 @@
 public class HumanPlayer extends Player {
 	
 	Move move;
-	BoardView bview;
+	GameView gview;
 
-	public HumanPlayer(IFieldState.FieldState t, BoardView bview) {
+	public HumanPlayer(IFieldState.FieldState t, GameView gview) {
 		super(t);
-		this.bview = bview;
-		bview.registerHumanPlayer(this);
+		this.gview = gview;
+		gview.registerHumanPlayer(this);
 	}
 	
 	public void setMove(Move move) {

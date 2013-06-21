@@ -1,5 +1,3 @@
-import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +22,6 @@ public class Field implements IFieldState {
 	
 	public boolean isOpen() {
 		return this.state == FieldState.N;
-	}
-	
-	public void draw(Graphics g, Rectangle rect) {
-		TTT.drawState(g, rect, this.state);
 	}
 
 	public List<Integer> getPossibleFields() {

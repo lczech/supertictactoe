@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -6,7 +7,7 @@ import java.util.List;
 public class Game implements Runnable {
 	
 	SuperBoard board = new SuperBoard(this);
-	private BoardView bview;
+	private GameView gview;
 	
 	int activeplayer = 0;
 	Player[] players = new Player[2];
@@ -18,9 +19,9 @@ public class Game implements Runnable {
 		players[1] = p2;
 	}
 	
-	public void setBoardView(BoardView bview) {
-		this.bview=bview;
-		bview.setBoard(board);
+	public void setBoardView(GameView bview) {
+		this.gview=bview;
+		bview.setGame(this);
 	}
 	
 	public Move getLastMove() {
@@ -40,9 +41,9 @@ public class Game implements Runnable {
 					winner = players[activeplayer];
 				}
 				
-				if (bview != null) {
+				if (gview != null) {
 					//board.draw(graphics, new Rectangle(50,50,300,300));
-					bview.repaint();
+					gview.repaint();
 				}
 				
 				activeplayer = 1-activeplayer; //next player is on turn
@@ -57,4 +58,39 @@ public class Game implements Runnable {
 			System.out.println("DRAW!");
 		}
 	}
+	
+	public void drawBoard(Graphics g, Rectangle rect) {
+		TTT.drawBoard(g, rect, gview.colorDefault);
+		
+		Color c;
+		Move lastmove = this.getLastMove();
+		Rectangle[] subrects = TTT.getSubrects(rect);
+		Rectangle[] subsubrects;
+		
+		for (int i=0;i<9;i++) {
+			if (this.board.getPossibleFields().contains(i)) {
+				c = gview.colorActive;
+			} else if (!this.board.boards[i].isOpen()) {
+				c = gview.colorInactive;
+			} else {
+				c = gview.colorDefault;
+			}
+			TTT.drawBoard(g, subrects[i], c);
+			
+			subsubrects = TTT.getSubrects(subrects[i]);
+			for (int j=0;j<9;j++) {
+				if (lastmove != null && i==lastmove.SuperMove && j==lastmove.SubMove) {
+					c = gview.colorLastMove;
+				} else {
+					c = gview.colorDefault;
+				}
+				TTT.drawState(g, subsubrects[j], this.board.boards[i].fields[j].getState(), c);
+			}
+			
+			TTT.drawState(g, subrects[i], this.board.boards[i].getState(), gview.colorDefault);
+		}
+		
+		TTT.drawState(g, rect, this.board.getState(), gview.colorDefault);
+	}
+	
 }

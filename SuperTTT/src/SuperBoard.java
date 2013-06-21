@@ -1,5 +1,3 @@
-import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,17 +83,6 @@ public class SuperBoard implements IFieldState {
 			}
 		}
 		return false;
-	}
-
-	public void draw(Graphics g, Rectangle rect) {
-		TTT.drawBoard(g, rect, false);
-		
-		Rectangle[] subrects = TTT.getSubrects(rect);
-		for (int i=0;i<9;i++) {
-			boards[i].draw(g, subrects[i], this.getPossibleFields().contains(i));
-		}
-		
-		TTT.drawState(g, rect, this.getState());
 	}
 	
 }
