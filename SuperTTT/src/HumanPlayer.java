@@ -15,7 +15,7 @@ public class HumanPlayer extends Player {
 	}
 
 	@Override
-	Move getMove(SuperBoard sb) {
+	public Move getMove(SuperBoard sb) {
 		synchronized(this){
 			try {
 				wait();

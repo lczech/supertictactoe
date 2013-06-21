@@ -25,10 +25,11 @@ public class Main {
 		//players[1] = new RandomPlayer(IFieldState.FieldState.O);
 		players[0] = new HumanPlayer(IFieldState.FieldState.X, bview);
 		players[1] = new HumanPlayer(IFieldState.FieldState.O, bview);
-		
+
 		game = new Game(players[0], players[1]);
 		game.setBoardView(bview);
 		game.run();
+		
 		
 		f.addMouseListener(new MouseListener() {
 			

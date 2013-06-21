@@ -10,7 +10,7 @@ public class RandomPlayer extends Player {
 	}
 
 	@Override
-	Move getMove(SuperBoard sb) {
+	public Move getMove(SuperBoard sb) {
 		List<Move> moves = sb.getPossibleMoves();
 		if (moves.size() > 0) {
 			return moves.get(r.nextInt(moves.size()));

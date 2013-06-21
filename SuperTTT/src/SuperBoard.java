@@ -85,4 +85,12 @@ public class SuperBoard implements IFieldState {
 		return false;
 	}
 	
+	public void undoMove() {
+		Move move = this.game.getLastMove();
+		if (move!=null) {
+			this.boards[move.SuperMove].fields[move.SubMove].setState(FieldState.N);
+			this.game.history.remove(this.game.history.size()-1);
+		}
+	}
+	
 }

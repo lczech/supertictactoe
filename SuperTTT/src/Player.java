@@ -7,6 +7,6 @@ public abstract class Player {
 		this.type = t;
 	}
 
-	abstract Move getMove(SuperBoard sb);
+	abstract public Move getMove(SuperBoard sb);
 	
 }
