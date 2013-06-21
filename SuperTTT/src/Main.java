@@ -8,8 +8,6 @@ public class Main {
 	
 	static Game game;
 	
-	static SuperBoard superboard = new SuperBoard();
-	
 	static int currplayer = 0;
 	static Player[] players = new Player[2];
 	

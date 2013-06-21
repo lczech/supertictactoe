@@ -15,18 +15,6 @@ public class HumanPlayer extends Player {
 	}
 
 	@Override
-	boolean makeMove(SuperBoard sb) {
-		synchronized(this){
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		return sb.makeMove(move, this.type);
-	}
-
-	@Override
 	Move getMove(SuperBoard sb) {
 		synchronized(this){
 			try {

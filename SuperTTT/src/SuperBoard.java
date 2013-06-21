@@ -5,20 +5,20 @@ import java.util.List;
 
 public class SuperBoard implements IFieldState {
 	
+	private Game game;
+	
 	private FieldState state;
 	
 	public SubBoard[] boards;
-	private List<Move> history;
 
-	public SuperBoard() {
+	public SuperBoard(Game g) {
+		this.game = g;
 		this.state = FieldState.N;
 		
 		this.boards = new SubBoard[9];
 		for (int i=0; i<9; i++) {
 			this.boards[i] = new SubBoard();
 		}
-		
-		this.history = new ArrayList<Move>();
 	}
 	
 	@Override
@@ -30,10 +30,6 @@ public class SuperBoard implements IFieldState {
 	public void setState(FieldState s) {
 		this.state = s;
 		
-	}
-	
-	public Move getLastMove() {
-		return history.size()>0? history.get(history.size()-1) : null;
 	}
 	
 	public boolean isOpen() {
@@ -48,12 +44,12 @@ public class SuperBoard implements IFieldState {
 	public List<Move> getPossibleMoves() {
 		List<Move> list = new ArrayList<Move>();
 		
-		if(this.history.size() == 0) {
+		if(this.game.history.size() == 0) {
 			for (int i=0; i<9; i++) {
 				boards[i].addMoves(list, i);
 			}
 		} else {
-			int s = this.history.get(this.history.size()-1).SubMove;
+			int s = this.game.history.get(this.game.history.size()-1).SubMove;
 			if (boards[s].isOpen()) {
 				boards[s].addMoves(list, s);
 			} else {
@@ -80,7 +76,11 @@ public class SuperBoard implements IFieldState {
 		for (Move m: getPossibleMoves()) {
 			if(move.equals(m)) {
 				this.boards[move.SuperMove].makeMove(move.SubMove, player);
-				history.add(move);
+				
+				if (TTT.isWon(boards, move.SuperMove, player)) {
+					System.out.println("SUPER WON SUPER WON SUPER WON");
+					this.state = player;
+				}
 				return true;
 			}
 		}

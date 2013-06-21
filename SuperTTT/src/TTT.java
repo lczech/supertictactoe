@@ -14,6 +14,8 @@ public class TTT {
 	}
 	
 	public static boolean isWon(IFieldState[] board, int lastmove, IFieldState.FieldState player) {
+		if (board[lastmove].getState() != player) return false;
+		
 		boolean won = false;
 		
 		switch (lastmove) {
