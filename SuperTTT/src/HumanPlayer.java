@@ -9,6 +9,10 @@ public class HumanPlayer extends Player {
 		this.bview = bview;
 		bview.registerHumanPlayer(this);
 	}
+	
+	public void setMove(Move move) {
+		this.move=move;
+	}
 
 	@Override
 	boolean makeMove(SuperBoard sb) {
@@ -21,9 +25,17 @@ public class HumanPlayer extends Player {
 		}
 		return sb.makeMove(move, this.type);
 	}
-	
-	public void setMove(Move move) {
-		this.move=move;
+
+	@Override
+	Move getMove(SuperBoard sb) {
+		synchronized(this){
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		return move;
 	}
 
 }

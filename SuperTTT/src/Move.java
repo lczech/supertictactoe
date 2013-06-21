@@ -7,4 +7,9 @@ public class Move {
 		this.SuperMove = supermove;
 		this.SubMove   = submove;
 	}
+	
+	public boolean equals(Move move) {
+		return this.SuperMove == move.SuperMove && this.SubMove == move.SubMove;
+	}
+	
 }

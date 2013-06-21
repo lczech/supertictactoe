@@ -77,10 +77,14 @@ public class SuperBoard implements IFieldState {
 	}
 	
 	public boolean makeMove(Move move, FieldState player) {
-		Move lastmove = getLastMove();
-		boolean result = ((lastmove == null || lastmove.SubMove==move.SuperMove) && this.boards[move.SuperMove].makeMove(move.SubMove, player));
-		if (result) history.add(move);
-		return result;
+		for (Move m: getPossibleMoves()) {
+			if(move.equals(m)) {
+				this.boards[move.SuperMove].makeMove(move.SubMove, player);
+				history.add(move);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void draw(Graphics g, Rectangle rect) {

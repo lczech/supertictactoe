@@ -9,4 +9,6 @@ public abstract class Player {
 	
 	abstract boolean makeMove(SuperBoard sb);
 	
+	abstract Move getMove(SuperBoard sb);
+	
 }
