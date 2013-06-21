@@ -40,5 +40,7 @@ public class Game implements Runnable {
 				activeplayer = 1-activeplayer; //next player is on turn
 			}
 		}
+		
+		System.out.println("WINNER: "+winner.type);
 	}
 }
