@@ -3,17 +3,33 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SuperBoard extends TTT {
+public class SuperBoard implements IFieldState {
+	
+	private FieldState state;
 	
 	public SubBoard[] boards;
 	private List<Move> history;
 
 	public SuperBoard() {
+		this.state = FieldState.N;
+		
 		this.boards = new SubBoard[9];
 		for (int i=0; i<9; i++) {
 			this.boards[i] = new SubBoard();
 		}
+		
 		this.history = new ArrayList<Move>();
+	}
+	
+	@Override
+	public FieldState getState() {
+		return this.state;
+	}
+
+	@Override
+	public void setState(FieldState s) {
+		this.state = s;
+		
 	}
 	
 	public Move getLastMove() {
@@ -50,7 +66,6 @@ public class SuperBoard extends TTT {
 		return list;
 	}
 	
-	@Override
 	public List<Integer> getPossibleFields() {
 		List<Integer> l = new ArrayList<Integer>();
 		for (Move m: getPossibleMoves()) {
@@ -61,16 +76,22 @@ public class SuperBoard extends TTT {
 		return l;
 	}
 	
-	public boolean makeMove(Move move, TTT.Type player) {
+	public boolean makeMove(Move move, FieldState player) {
 		Move lastmove = getLastMove();
 		boolean result = ((lastmove == null || lastmove.SubMove==move.SuperMove) && this.boards[move.SuperMove].makeMove(move.SubMove, player));
 		if (result) history.add(move);
 		return result;
 	}
 
-	public void draw(Graphics g, Rectangle rect, boolean active) {
-		drawBoard(g, rect, boards, false);
-		drawState(g, rect);
+	public void draw(Graphics g, Rectangle rect) {
+		TTT.drawBoard(g, rect, false);
+		
+		Rectangle[] subrects = TTT.getSubrects(rect);
+		for (int i=0;i<9;i++) {
+			boards[i].draw(g, subrects[i], this.getPossibleFields().contains(i));
+		}
+		
+		TTT.drawState(g, rect, this.getState());
 	}
 	
 }

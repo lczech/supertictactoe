@@ -2,84 +2,70 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.util.List;
 
-
-public abstract class TTT {
+public class TTT {
 	
-	public static enum Type {N, X, O};
-
-	public TTT.Type State;
-	
-	public TTT() {
-		this.State  = TTT.Type.N;
-	}
-	
-	public int Point2Field(int x, int y) {
+	public static int Point2Field(int x, int y) {
 		return y*3 + x;
 	}
 	
-	public Point Field2Point(int field) {
+	public static Point Field2Point(int field) {
 		return new Point(field%3, field/3);
 	}
 	
-	abstract public boolean isOpen();
-	
-	abstract public List<Integer> getPossibleFields();
-	
-	public boolean isWon(TTT[] board, int lastmove, TTT.Type player) {
+	public static boolean isWon(IFieldState[] board, int lastmove, IFieldState.FieldState player) {
 		boolean won = false;
 		
 		switch (lastmove) {
 		case 0:
-			won |= board[1].State == player && board[2].State == player;
-			won |= board[3].State == player && board[6].State == player;
-			won |= board[4].State == player && board[8].State == player;
+			won |= board[1].getState() == player && board[2].getState() == player;
+			won |= board[3].getState() == player && board[6].getState() == player;
+			won |= board[4].getState() == player && board[8].getState() == player;
 			break;
 			
 		case 1:
-			won |= board[0].State == player && board[2].State == player;
-			won |= board[4].State == player && board[7].State == player;
+			won |= board[0].getState() == player && board[2].getState() == player;
+			won |= board[4].getState() == player && board[7].getState() == player;
 			break;
 			
 		case 2:
-			won |= board[0].State == player && board[1].State == player;
-			won |= board[5].State == player && board[8].State == player;
-			won |= board[4].State == player && board[6].State == player;
+			won |= board[0].getState() == player && board[1].getState() == player;
+			won |= board[5].getState() == player && board[8].getState() == player;
+			won |= board[4].getState() == player && board[6].getState() == player;
 			break;
 			
 		case 3:
-			won |= board[0].State == player && board[6].State == player;
-			won |= board[4].State == player && board[5].State == player;
+			won |= board[0].getState() == player && board[6].getState() == player;
+			won |= board[4].getState() == player && board[5].getState() == player;
 			break;
 			
 		case 4:
-			won |= board[1].State == player && board[7].State == player;
-			won |= board[3].State == player && board[5].State == player;
-			won |= board[0].State == player && board[8].State == player;
-			won |= board[2].State == player && board[6].State == player;
+			won |= board[1].getState() == player && board[7].getState() == player;
+			won |= board[3].getState() == player && board[5].getState() == player;
+			won |= board[0].getState() == player && board[8].getState() == player;
+			won |= board[2].getState() == player && board[6].getState() == player;
 			break;
 			
 		case 5:
-			won |= board[2].State == player && board[8].State == player;
-			won |= board[3].State == player && board[4].State == player;
+			won |= board[2].getState() == player && board[8].getState() == player;
+			won |= board[3].getState() == player && board[4].getState() == player;
 			break;
 			
 		case 6:
-			won |= board[0].State == player && board[3].State == player;
-			won |= board[7].State == player && board[8].State == player;
-			won |= board[4].State == player && board[2].State == player;
+			won |= board[0].getState() == player && board[3].getState() == player;
+			won |= board[7].getState() == player && board[8].getState() == player;
+			won |= board[4].getState() == player && board[2].getState() == player;
 			break;
 			
 		case 7:
-			won |= board[1].State == player && board[4].State == player;
-			won |= board[6].State == player && board[8].State == player;
+			won |= board[1].getState() == player && board[4].getState() == player;
+			won |= board[6].getState() == player && board[8].getState() == player;
 			break;
 			
 		case 8:
-			won |= board[6].State == player && board[7].State == player;
-			won |= board[2].State == player && board[5].State == player;
-			won |= board[0].State == player && board[4].State == player;
+			won |= board[6].getState() == player && board[7].getState() == player;
+			won |= board[2].getState() == player && board[5].getState() == player;
+			won |= board[0].getState() == player && board[4].getState() == player;
 			break;
 			
 		default:
@@ -88,16 +74,14 @@ public abstract class TTT {
 		
 		return won;
 	}
-	
-	abstract public void draw(Graphics g, Rectangle rect, boolean active);
-	
-	public void drawState(Graphics g, Rectangle rect) {
+
+	public static void drawState(Graphics g, Rectangle rect, IFieldState.FieldState state) {
 		rect.x      += 0.15 * rect.width;
 		rect.y      += 0.15 * rect.height;
 		rect.width  *= 0.7;
 		rect.height *= 0.7;
 		
-		switch (this.State) {
+		switch (state) {
 		case X:
 			g.drawLine(rect.x, rect.y, rect.x+rect.width, rect.y+rect.height);
 			g.drawLine(rect.x+rect.width, rect.y, rect.x, rect.y+rect.height);
@@ -112,24 +96,21 @@ public abstract class TTT {
 		}		
 	}
 	
-	public void drawBoard(Graphics g, Rectangle rect, TTT[] fields, boolean active) {
-		rect.x      += 0.1 * rect.width;
-		rect.y      += 0.1 * rect.height;
-		rect.width  *= 0.8;
-		rect.height *= 0.8;
+	public static void drawBoard(Graphics g, Rectangle rect, boolean active) {
+		int x = (int) (rect.x + 0.1 * rect.width);
+		int y = (int) (rect.y + 0.1 * rect.height);
+		int w = (int) (0.8 * rect.width  / 3);
+		int h = (int) (0.8 * rect.height / 3);
 		
-		int w=rect.width/3;
-		int h=rect.height/3;
+		int x0 = x+w*0;
+		int x1 = x+w*1;
+		int x2 = x+w*2;
+		int x3 = x+w*3;
 		
-		int x0 = rect.x+(rect.width*0)/3;
-		int x1 = rect.x+(rect.width*1)/3;
-		int x2 = rect.x+(rect.width*2)/3;
-		int x3 = rect.x+(rect.width*3)/3;
-		
-		int y0 = rect.y+(rect.height*0)/3;
-		int y1 = rect.y+(rect.height*1)/3;
-		int y2 = rect.y+(rect.height*2)/3;
-		int y3 = rect.y+(rect.height*3)/3;
+		int y0 = y+h*0;
+		int y1 = y+h*1;
+		int y2 = y+h*2;
+		int y3 = y+h*3;
 		
 		int bw=0;
 		
@@ -151,6 +132,23 @@ public abstract class TTT {
 			g.drawLine(x2+d, y0+bw, x2+d, y3-bw);
 		}
 		g.setColor(Color.black);
+	}
+	
+	public static Rectangle[] getSubrects(Rectangle rect) {
+		int x = (int) (rect.x + 0.1 * rect.width);
+		int y = (int) (rect.y + 0.1 * rect.height);
+		int w = (int) (0.8 * rect.width  / 3);
+		int h = (int) (0.8 * rect.height / 3);
+		
+		int x0 = x+w*0;
+		int x1 = x+w*1;
+		int x2 = x+w*2;
+		int x3 = x+w*3;
+		
+		int y0 = y+h*0;
+		int y1 = y+h*1;
+		int y2 = y+h*2;
+		int y3 = y+h*3;
 		
 		Rectangle[] subrects = new Rectangle[9];
 		subrects[0] = new Rectangle(x0,y0,w,h);
@@ -163,9 +161,7 @@ public abstract class TTT {
 		subrects[7] = new Rectangle(x1,y2,w,h);
 		subrects[8] = new Rectangle(x2,y2,w,h);
 		
-		for (int i=0;i<9;i++) {
-			fields[i].draw(g, subrects[i], this.getPossibleFields().contains(i));
-		}
+		return subrects;
 	}
 
 }

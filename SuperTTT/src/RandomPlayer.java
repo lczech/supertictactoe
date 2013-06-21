@@ -5,7 +5,7 @@ public class RandomPlayer extends Player {
 	
 	Random r = new Random();
 
-	public RandomPlayer(TTT.Type t) {
+	public RandomPlayer(IFieldState.FieldState t) {
 		super(t);
 	}
 

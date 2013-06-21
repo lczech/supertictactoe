@@ -3,15 +3,30 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubBoard extends TTT {
+public class SubBoard implements IFieldState {
+	
+	private FieldState state;
 	
 	public Field[] fields;
 	
 	public SubBoard() {
+		this.state = FieldState.N;
+		
 		this.fields = new Field[9];
 		for (int i=0; i<9; i++) {
 			this.fields[i] = new Field();
 		}
+	}
+	
+	@Override
+	public FieldState getState() {
+		return this.state;
+	}
+
+	@Override
+	public void setState(FieldState s) {
+		this.state = s;
+		
 	}
 	
 	public boolean isOpen() {
@@ -23,7 +38,6 @@ public class SubBoard extends TTT {
 		return false;
 	}
 	
-	@Override
 	public List<Integer> getPossibleFields() {
 		List<Integer> l = new ArrayList<Integer>();
 		for (int i=0; i<9; i++) {
@@ -42,14 +56,14 @@ public class SubBoard extends TTT {
 		}
 	}
 	
-	public boolean makeMove(int field, TTT.Type player) {
-		if (this.fields[field].State==TTT.Type.N) {
-			this.fields[field].State = player;
+	public boolean makeMove(int field, IFieldState.FieldState player) {
+		if (this.fields[field].getState()==FieldState.N) {
+			this.fields[field].setState(player);
 			System.out.println(field);
 			
-			if(isWon(fields, field, player)) {
+			if(TTT.isWon(fields, field, player)) {
 				System.out.println("WON WON WON");
-				this.State = player;
+				this.setState(player);
 			}
 			
 			return true;
@@ -58,10 +72,16 @@ public class SubBoard extends TTT {
 		}
 	}
 
-	@Override
 	public void draw(Graphics g, Rectangle rect, boolean active) {
-		drawBoard(g, rect, fields, active);
-		drawState(g, rect);
+		TTT.drawBoard(g, rect, active);
+		
+		Rectangle[] subrects = TTT.getSubrects(rect);
+		for (int i=0;i<9;i++) {
+			fields[i].draw(g, subrects[i]);
+			// , this.getPossibleFields().contains(i)
+		}
+		
+		TTT.drawState(g, rect, this.state);
 	}
 
 }
