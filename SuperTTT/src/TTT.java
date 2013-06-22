@@ -5,6 +5,19 @@ import java.awt.Rectangle;
 
 public class TTT {
 	
+	public static Seed Opponent (Seed player) {
+		switch (player) {
+		case X:
+			return Seed.O;
+			
+		case O:
+			return Seed.X;
+			
+		default:
+			return Seed.N;
+		}
+	}
+	
 	public static int Point2Field(int x, int y) {
 		return y*3 + x;
 	}
@@ -13,7 +26,11 @@ public class TTT {
 		return new Point(field%3, field/3);
 	}
 	
-	public static boolean isWon(IFieldState[] board, int lastmove, IFieldState.FieldState player) {
+	public static boolean isWon(ISeeded[] board) {
+		return false;
+	}
+	
+	public static boolean isWon(ISeeded[] board, int lastmove, Seed player) {
 		if (board[lastmove].getState() != player) return false;
 		
 		boolean won = false;
@@ -77,7 +94,7 @@ public class TTT {
 		return won;
 	}
 
-	public static void drawState(Graphics g, Rectangle rect, IFieldState.FieldState state, Color color) {
+	public static void drawState(Graphics g, Rectangle rect, Seed state, Color color) {
 		rect.x      += 0.15 * rect.width;
 		rect.y      += 0.15 * rect.height;
 		rect.width  *= 0.7;
@@ -145,12 +162,12 @@ public class TTT {
 		int x0 = x+w*0;
 		int x1 = x+w*1;
 		int x2 = x+w*2;
-		int x3 = x+w*3;
+		//int x3 = x+w*3;
 		
 		int y0 = y+h*0;
 		int y1 = y+h*1;
 		int y2 = y+h*2;
-		int y3 = y+h*3;
+		//int y3 = y+h*3;
 		
 		Rectangle[] subrects = new Rectangle[9];
 		subrects[0] = new Rectangle(x0,y0,w,h);

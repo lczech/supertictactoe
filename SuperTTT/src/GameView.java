@@ -74,16 +74,50 @@ public class GameView extends JPanel {
 		});
 	}
 	
+	public void registerHumanPlayer(HumanPlayer humanPlayer) {
+		players.add(humanPlayer);
+	}
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (game!=null){
-			game.drawBoard(g, new Rectangle(0,0,500,500));			
+			this.drawBoard(g, new Rectangle(0,0,500,500));			
 		}
 	}
 
-	public void registerHumanPlayer(HumanPlayer humanPlayer) {
-		players.add(humanPlayer);
+	public void drawBoard(Graphics g, Rectangle rect) {
+		TTT.drawBoard(g, rect, this.colorDefault);
+		
+		Color c;
+		Move lastmove = this.game.getLastMove();
+		Rectangle[] subrects = TTT.getSubrects(rect);
+		Rectangle[] subsubrects;
+		
+		for (int i=0;i<9;i++) {
+			if (this.game.board.getPossibleFields().contains(i)) {
+				c = this.colorActive;
+			} else if (!this.game.board.boards[i].isOpen()) {
+				c = this.colorInactive;
+			} else {
+				c = this.colorDefault;
+			}
+			TTT.drawBoard(g, subrects[i], c);
+			
+			subsubrects = TTT.getSubrects(subrects[i]);
+			for (int j=0;j<9;j++) {
+				if (lastmove != null && i==lastmove.SuperMove && j==lastmove.SubMove) {
+					c = this.colorLastMove;
+				} else {
+					c = this.colorDefault;
+				}
+				TTT.drawState(g, subsubrects[j], this.game.board.boards[i].fields[j].getState(), c);
+			}
+			
+			TTT.drawState(g, subrects[i], this.game.board.boards[i].getState(), this.colorDefault);
+		}
+		
+		TTT.drawState(g, rect, this.game.board.getState(), this.colorDefault);
 	}
 
 }

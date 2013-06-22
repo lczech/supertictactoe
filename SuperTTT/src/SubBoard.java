@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubBoard implements IFieldState {
+public class SubBoard implements ISeeded {
 	
-	private FieldState state;
+	private Seed state;
 	
 	public Field[] fields;
 	
 	public SubBoard() {
-		this.state = FieldState.N;
+		this.state = Seed.N;
 		
 		this.fields = new Field[9];
 		for (int i=0; i<9; i++) {
@@ -17,14 +17,15 @@ public class SubBoard implements IFieldState {
 	}
 	
 	@Override
-	public FieldState getState() {
+	public Seed getState() {
 		return this.state;
 	}
 
 	@Override
-	public void setState(FieldState s) {
+	public Seed setState(Seed s) {
+		Seed old = this.state;
 		this.state = s;
-		
+		return old;
 	}
 	
 	public boolean isOpen() {
@@ -54,12 +55,11 @@ public class SubBoard implements IFieldState {
 		}
 	}
 	
-	public boolean makeMove(int field, IFieldState.FieldState player) {
-		if (this.fields[field].getState()==FieldState.N) {
+	public boolean makeMove(int field, Seed player) {
+		if (this.fields[field].getState() == Seed.N) {
 			this.fields[field].setState(player);
-			System.out.println(field);
 			
-			if(TTT.isWon(fields, field, player)) {
+			if(this.state == Seed.N && TTT.isWon(fields, field, player)) {
 				System.out.println("WON WON WON");
 				this.setState(player);
 			}

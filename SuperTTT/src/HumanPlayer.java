@@ -4,7 +4,7 @@ public class HumanPlayer extends Player {
 	Move move;
 	GameView gview;
 
-	public HumanPlayer(IFieldState.FieldState t, GameView gview) {
+	public HumanPlayer(Seed t, GameView gview) {
 		super(t);
 		this.gview = gview;
 		gview.registerHumanPlayer(this);

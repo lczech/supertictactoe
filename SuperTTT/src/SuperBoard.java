@@ -1,17 +1,17 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class SuperBoard implements IFieldState {
+public class SuperBoard  {
 	
-	private Game game;
+	public Game game;
 	
-	private FieldState state;
+	private Seed state;
 	
 	public SubBoard[] boards;
 
 	public SuperBoard(Game g) {
 		this.game = g;
-		this.state = FieldState.N;
+		this.state = Seed.N;
 		
 		this.boards = new SubBoard[9];
 		for (int i=0; i<9; i++) {
@@ -19,15 +19,14 @@ public class SuperBoard implements IFieldState {
 		}
 	}
 	
-	@Override
-	public FieldState getState() {
+	public Seed getState() {
 		return this.state;
 	}
 
-	@Override
-	public void setState(FieldState s) {
+	public Seed setState(Seed s) {
+		Seed old = this.state;
 		this.state = s;
-		
+		return old;
 	}
 	
 	public boolean isOpen() {
@@ -39,15 +38,19 @@ public class SuperBoard implements IFieldState {
 		return false;
 	}
 	
-	public List<Move> getPossibleMoves() {
-		List<Move> list = new ArrayList<Move>();
+	public ArrayList<Move> getPossibleMoves() {
+		ArrayList<Move> list = new ArrayList<Move>();
 		
-		if(this.game.history.size() == 0) {
+		if (this.state != Seed.N) {
+			return list;
+		}
+		
+		if (this.game.history.size() == 0) {
 			for (int i=0; i<9; i++) {
 				boards[i].addMoves(list, i);
 			}
 		} else {
-			int s = this.game.history.get(this.game.history.size()-1).SubMove;
+			int s = this.game.getLastMove().SubMove;
 			if (boards[s].isOpen()) {
 				boards[s].addMoves(list, s);
 			} else {
@@ -70,27 +73,31 @@ public class SuperBoard implements IFieldState {
 		return l;
 	}
 	
-	public boolean makeMove(Move move, FieldState player) {
+	public boolean makeMove(Move move, Seed player) {
+		if (player == Seed.N) {
+			return false;
+		}
+		
 		for (Move m: getPossibleMoves()) {
 			if(move.equals(m)) {
+				System.out.println(player.toString() + " " + move.SuperMove + " " + move.SubMove);
+				
+				Seed ps = this.boards[move.SuperMove].getState();
 				this.boards[move.SuperMove].makeMove(move.SubMove, player);
 				
-				if (TTT.isWon(boards, move.SuperMove, player)) {
+				if (ps != this.boards[move.SuperMove].getState()) {
+					move.wonSub = true;
+				}
+				
+				if (this.state == Seed.N && TTT.isWon(boards, move.SuperMove, player)) {
 					System.out.println("SUPER WON SUPER WON SUPER WON");
 					this.state = player;
+					move.wonSuper = true;
 				}
 				return true;
 			}
 		}
 		return false;
-	}
-	
-	public void undoMove() {
-		Move move = this.game.getLastMove();
-		if (move!=null) {
-			this.boards[move.SuperMove].fields[move.SubMove].setState(FieldState.N);
-			this.game.history.remove(this.game.history.size()-1);
-		}
 	}
 	
 }

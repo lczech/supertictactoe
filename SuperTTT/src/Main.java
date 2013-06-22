@@ -1,4 +1,3 @@
-import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -18,16 +17,17 @@ public class Main {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//superboard.draw(f.getRootPane().getGraphics(), new Rectangle(50, 50, 250, 250));
-		GameView bview = new GameView();
-		f.add(bview);
+		GameView gview = new GameView();
+		f.add(gview);
 		
-		//players[0] = new RandomPlayer(IFieldState.FieldState.X);
-		//players[1] = new RandomPlayer(IFieldState.FieldState.O);
-		players[0] = new HumanPlayer(IFieldState.FieldState.X, bview);
-		players[1] = new HumanPlayer(IFieldState.FieldState.O, bview);
+		//players[0] = new RandomPlayer(Seed.X);
+		//players[1] = new RandomPlayer(Seed.O);
+		players[0] = new HumanPlayer(Seed.X, gview);
+		//players[1] = new HumanPlayer(Seed.O, gview);
+		players[1] = new LucasPlayer(Seed.O);
 
 		game = new Game(players[0], players[1]);
-		game.setBoardView(bview);
+		game.setBoardView(gview);
 		game.run();
 		
 		

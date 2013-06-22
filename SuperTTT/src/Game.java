@@ -15,8 +15,13 @@ public class Game implements Runnable {
 	public List<Move> history = new ArrayList<Move>();
 	
 	public Game(Player p1, Player p2) {
-		players[0] = p1;
-		players[1] = p2;
+		if (p1.type == Seed.X && p2.type == Seed.O
+				|| p1.type == Seed.O && p2.type == Seed.X) {
+			players[0] = p1;
+			players[1] = p2;
+		} else {
+			System.out.println("Invalid player configuration.");
+		}
 	}
 	
 	public void setBoardView(GameView bview) {
@@ -27,70 +32,51 @@ public class Game implements Runnable {
 	public Move getLastMove() {
 		return history.size()>0? history.get(history.size()-1) : null;
 	}
-
-	@Override
-	public void run() {
-		Player winner = null;
-		
-		while (board.isOpen() && winner==null) {
-			Move move = players[activeplayer].getMove(board);
-			if (board.makeMove(move, players[activeplayer].type)) {
-				this.history.add(move);
-				
-				if (board.getState() == players[activeplayer].type) {
-					winner = players[activeplayer];
-				}
-				
-				if (gview != null) {
-					//board.draw(graphics, new Rectangle(50,50,300,300));
-					gview.repaint();
-				}
-				
-				activeplayer = 1-activeplayer; //next player is on turn
-			} else {
-				System.out.println("Invalid move: (" + move.SuperMove + " " + move.SubMove + ")");
+	
+	public void makeMove(Move move) {
+		if (board.makeMove(move, players[activeplayer].type)) {
+			this.history.add(move);
+			
+			if (gview != null) {
+				gview.repaint();
 			}
-		}
-		
-		if (winner != null) {
-			System.out.println("WINNER: "+winner.type);
+			
+			activeplayer = 1-activeplayer; //next player is on turn
 		} else {
-			System.out.println("DRAW!");
+			System.out.println("Invalid move: (" + move.SuperMove + " " + move.SubMove + ")");
 		}
 	}
 	
-	public void drawBoard(Graphics g, Rectangle rect) {
-		TTT.drawBoard(g, rect, gview.colorDefault);
-		
-		Color c;
-		Move lastmove = this.getLastMove();
-		Rectangle[] subrects = TTT.getSubrects(rect);
-		Rectangle[] subsubrects;
-		
-		for (int i=0;i<9;i++) {
-			if (this.board.getPossibleFields().contains(i)) {
-				c = gview.colorActive;
-			} else if (!this.board.boards[i].isOpen()) {
-				c = gview.colorInactive;
-			} else {
-				c = gview.colorDefault;
-			}
-			TTT.drawBoard(g, subrects[i], c);
+	public void undoMove() {
+		Move move = this.getLastMove();
+		if (move!=null) {
+			System.out.println("Undoing (" + move.SuperMove + " " + move.SubMove + ")");
 			
-			subsubrects = TTT.getSubrects(subrects[i]);
-			for (int j=0;j<9;j++) {
-				if (lastmove != null && i==lastmove.SuperMove && j==lastmove.SubMove) {
-					c = gview.colorLastMove;
-				} else {
-					c = gview.colorDefault;
-				}
-				TTT.drawState(g, subsubrects[j], this.board.boards[i].fields[j].getState(), c);
+			this.board.boards[move.SuperMove].fields[move.SubMove].setState(Seed.N);
+			
+			if (move.wonSub) {
+				this.board.boards[move.SuperMove].setState(Seed.N);
 			}
 			
-			TTT.drawState(g, subrects[i], this.board.boards[i].getState(), gview.colorDefault);
+			if (move.wonSuper) {
+				this.board.setState(Seed.N);
+			}
+			
+			this.history.remove(this.history.size()-1);
+		}
+	}
+
+	@Override
+	public void run() {
+		while (board.isOpen() && board.getState() == Seed.N) {
+			makeMove(players[activeplayer].getMove(board));
 		}
 		
-		TTT.drawState(g, rect, this.board.getState(), gview.colorDefault);
+		if (board.getState() != Seed.N) {
+			System.out.println("WINNER: "+board.getState());
+		} else {
+			System.out.println("DRAW!");
+		}
 	}
 	
 }

@@ -1,31 +1,26 @@
-import java.util.ArrayList;
-import java.util.List;
 
-public class Field implements IFieldState {
+public class Field implements ISeeded {
 	
-	private FieldState state;
+	private Seed state;
 	
 	public Field() {
-		this.state = FieldState.N;
+		this.state = Seed.N;
 	}
 
 	@Override
-	public FieldState getState() {
+	public Seed getState() {
 		return this.state;
 	}
 
 	@Override
-	public void setState(FieldState s) {
+	public Seed setState(Seed s) {
+		Seed old = this.state;
 		this.state = s;
-		
+		return old;
 	}
 	
 	public boolean isOpen() {
-		return this.state == FieldState.N;
-	}
-
-	public List<Integer> getPossibleFields() {
-		return new ArrayList<Integer>();
+		return this.state == Seed.N;
 	}
 	
 }
