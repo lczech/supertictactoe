@@ -112,8 +112,9 @@ public class TTT {
 		
 		switch (state) {
 		case X:
-			g.drawLine(rect.x, rect.y, rect.x+rect.width, rect.y+rect.height);
-			g.drawLine(rect.x+rect.width, rect.y, rect.x, rect.y+rect.height);
+			//g.drawLine(rect.x, rect.y, rect.x+rect.width, rect.y+rect.height);
+			//g.drawLine(rect.x+rect.width, rect.y, rect.x, rect.y+rect.height);
+			g.drawImage(Constants.imgX, rect.x, rect.y, rect.width, rect.height, null);
 			break;
 			
 		case O:

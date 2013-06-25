@@ -1,8 +1,8 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 public class GameView extends JPanel {
 	
+	private static final long serialVersionUID = 1L;
 	public Color colorDefault  = Color.black;
 	public Color colorActive   = Color.red;
 	public Color colorInactive = Color.gray;
@@ -25,13 +26,7 @@ public class GameView extends JPanel {
 	
 	public GameView() {
 		//this.board = board;
-		this.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
+		this.addMouseListener(new MouseAdapter() {
 			
 			@Override
 			public void mousePressed(MouseEvent arg0) {
@@ -52,24 +47,6 @@ public class GameView extends JPanel {
 						p.notify();
 					}	
 				}
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
 			}
 		});
 	}
