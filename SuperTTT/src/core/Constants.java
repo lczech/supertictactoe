@@ -12,8 +12,8 @@ public class Constants {
 	
 	public static void init() {
 		try {
-			imgX = ImageIO.read(new File("/home/m4x/git/supertictactoe/SuperTTT/X.png"));
-			imgO = ImageIO.read(new File("/home/m4x/git/supertictactoe/SuperTTT/O.png"));
+			imgX = ImageIO.read(new File("X.png"));
+			imgO = ImageIO.read(new File("O.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
