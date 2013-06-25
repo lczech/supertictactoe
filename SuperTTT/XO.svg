@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="New document 1">
+  <defs
+     id="defs4">
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect2987"
+       is_visible="true" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect2987-9"
+       is_visible="true" />
+    <filter
+       inkscape:collect="always"
+       id="filter3831">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.24802713"
+         id="feGaussianBlur3833" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter3835">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.24432273"
+         id="feGaussianBlur3837" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter3843">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.2480271"
+         id="feGaussianBlur3845" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="127.76035"
+     inkscape:cy="229.9917"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1391"
+     inkscape:window-height="876"
+     inkscape:window-x="49"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="path2985-3"
+       style="opacity:0.9;fill:none;stroke:#000000;stroke-width:5.2842474;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter3831)"
+       inkscape:path-effect="#path-effect2987-9"
+       inkscape:original-d="M 102.3061,950.05605 3.0952651,1049.2669 m 0,-99.21084 99.2108249,99.21084"
+       d="M 102.3061,950.05605 3.0952651,1049.2669 m 0,-99.21084 99.2108249,99.21084"
+       inkscape:connector-curvature="0"
+       transform="matrix(0.94620259,0,0,0.94620245,0.1341582,56.480362)"
+       inkscape:export-filename="/home/m4x/X.png"
+       inkscape:export-xdpi="449.38623"
+       inkscape:export-ydpi="449.38623" />
+    <path
+       style="opacity:0.9;fill:none;stroke:#000000;stroke-width:5.20548058;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;filter:url(#filter3835)"
+       d="m 114.33574,1119.0551 c 0,26.9871 -21.877412,48.8645 -48.864561,48.8645 -26.98715,0 -48.864558,-21.8774 -48.864558,-48.8645 0,-26.9871 21.877408,-48.8645 48.864558,-48.8645 26.987149,0 48.864561,21.8774 48.864561,48.8645 z"
+       id="path3784"
+       inkscape:connector-curvature="0"
+       transform="matrix(0.96054696,0,0,0.96054812,137.11186,-72.54409)"
+       inkscape:export-filename="/home/m4x/O.png"
+       inkscape:export-xdpi="449.98752"
+       inkscape:export-ydpi="449.98752" />
+  </g>
+</svg>

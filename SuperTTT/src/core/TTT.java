@@ -131,7 +131,7 @@ public class TTT {
 		((Graphics2D) g).setStroke(new BasicStroke(1f));
 	}
 	
-	public static void drawBoard(Graphics g, Rectangle rect, Color color) {
+	public static void drawBoard(Graphics g, Rectangle rect, Color color, boolean superboard) {
 		int x = (int) (rect.x + 0.1 * rect.width);
 		int y = (int) (rect.y + 0.1 * rect.height);
 		int w = (int) (0.8 * rect.width  / 3);
@@ -150,12 +150,17 @@ public class TTT {
 		int bw=0;
 	
 		g.setColor(color);
-		//g.drawLine(x0+bw, y1, x3-bw, y1);
-		//g.drawLine(x0+bw, y2, x3-bw, y2);
-		//g.drawLine(x1, y0+bw, x1, y3-bw);
-		//g.drawLine(x2, y0+bw, x2, y3-bw);
+		if (superboard) {
+			((Graphics2D)g).setStroke(new BasicStroke(4f));			
+		} else {
+			((Graphics2D)g).setStroke(new BasicStroke(2f));		
+		}
+		g.drawLine(x0+bw, y1, x3-bw, y1);
+		g.drawLine(x0+bw, y2, x3-bw, y2);
+		g.drawLine(x1, y0+bw, x1, y3-bw);
+		g.drawLine(x2, y0+bw, x2, y3-bw);
 		
-		int d;
+		/*int d;
 		for (int i=0; i<2; i++) {
 			if(i==0) d = -w/40; else d = w/40;
 			
@@ -163,8 +168,9 @@ public class TTT {
 			g.drawLine(x0+bw, y2+d, x3-bw, y2+d);
 			g.drawLine(x1+d, y0+bw, x1+d, y3-bw);
 			g.drawLine(x2+d, y0+bw, x2+d, y3-bw);
-		}
+		}*/
 		g.setColor(Color.black);
+		((Graphics2D)g).setStroke(new BasicStroke(1f));
 	}
 	
 	public static Rectangle[] getSubrects(Rectangle rect) {

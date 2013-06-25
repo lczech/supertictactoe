@@ -68,7 +68,7 @@ public class GameView extends JPanel {
 	}
 
 	public void drawBoard(Graphics g, Rectangle rect) {
-		TTT.drawBoard(g, rect, this.colorDefault);
+		TTT.drawBoard(g, rect, this.colorDefault,true);
 		
 		Color c;
 		Move lastmove = this.game.getLastMove();
@@ -83,7 +83,7 @@ public class GameView extends JPanel {
 			} else {
 				c = this.colorDefault;
 			}
-			TTT.drawBoard(g, subrects[i], c);
+			TTT.drawBoard(g, subrects[i], c,false);
 			
 			subsubrects = TTT.getSubrects(subrects[i]);
 			for (int j=0;j<9;j++) {
