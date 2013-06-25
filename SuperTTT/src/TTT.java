@@ -1,5 +1,7 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 
@@ -94,13 +96,19 @@ public class TTT {
 		return won;
 	}
 
-	public static void drawState(Graphics g, Rectangle rect, Seed state, Color color) {
+	public static void drawState(Graphics g, Rectangle rect, Seed state, Color color, int size) {
 		rect.x      += 0.15 * rect.width;
 		rect.y      += 0.15 * rect.height;
 		rect.width  *= 0.7;
 		rect.height *= 0.7;
 		
 		g.setColor(color);
+		
+		switch (size) {
+		case 1: ((Graphics2D) g).setStroke(new BasicStroke(1f)); break;
+		case 2: ((Graphics2D) g).setStroke(new BasicStroke(2f)); break;
+		case 3: ((Graphics2D) g).setStroke(new BasicStroke(4f)); break;
+		}
 		
 		switch (state) {
 		case X:
@@ -114,7 +122,9 @@ public class TTT {
 
 		default:
 			break;
-		}		
+		}
+		
+		((Graphics2D) g).setStroke(new BasicStroke(1f));
 	}
 	
 	public static void drawBoard(Graphics g, Rectangle rect, Color color) {

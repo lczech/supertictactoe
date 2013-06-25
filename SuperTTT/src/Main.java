@@ -24,7 +24,7 @@ public class Main {
 		//players[1] = new RandomPlayer(Seed.O);
 		players[0] = new HumanPlayer(Seed.X, gview);
 		//players[1] = new HumanPlayer(Seed.O, gview);
-		players[1] = new LucasPlayer(Seed.O);
+		players[1] = new RandomPlayer(Seed.O);
 
 		game = new Game(players[0], players[1]);
 		game.setBoardView(gview);

@@ -111,13 +111,13 @@ public class GameView extends JPanel {
 				} else {
 					c = this.colorDefault;
 				}
-				TTT.drawState(g, subsubrects[j], this.game.board.boards[i].fields[j].getState(), c);
+				TTT.drawState(g, subsubrects[j], this.game.board.boards[i].fields[j].getState(), c, 1);
 			}
 			
-			TTT.drawState(g, subrects[i], this.game.board.boards[i].getState(), this.colorDefault);
+			TTT.drawState(g, subrects[i], this.game.board.boards[i].getState(), this.colorDefault, 2);
 		}
 		
-		TTT.drawState(g, rect, this.game.board.getState(), this.colorDefault);
+		TTT.drawState(g, rect, this.game.board.getState(), this.colorDefault, 3);
 	}
 
 }
