@@ -120,7 +120,8 @@ public class TTT {
 			break;
 			
 		case O:
-			g.drawOval(rect.x, rect.y, rect.width, rect.height);
+			//g.drawOval(rect.x, rect.y, rect.width, rect.height);
+			g.drawImage(Constants.imgO, rect.x, rect.y, rect.width, rect.height, null);
 			break;
 
 		default:
