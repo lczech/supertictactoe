@@ -1,4 +1,15 @@
+package shell;
+
 import javax.swing.JFrame;
+
+import core.Constants;
+import core.Game;
+import core.GameView;
+import core.Seed;
+
+import players.HumanPlayer;
+import players.Player;
+import players.RandomPlayer;
 
 public class Main {
 	

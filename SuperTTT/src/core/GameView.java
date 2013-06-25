@@ -1,3 +1,4 @@
+package core;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -7,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
+
+
+import players.HumanPlayer;
 
 
 public class GameView extends JPanel {

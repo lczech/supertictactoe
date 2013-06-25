@@ -1,5 +1,11 @@
+package players;
+
 import java.util.List;
 import java.util.Random;
+
+import core.Move;
+import core.Seed;
+import core.SuperBoard;
 
 public class RandomPlayer extends Player {
 	

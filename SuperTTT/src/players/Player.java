@@ -1,3 +1,9 @@
+package players;
+import core.Move;
+import core.Seed;
+import core.SuperBoard;
+import core.TTT;
+
 
 public abstract class Player {
 	

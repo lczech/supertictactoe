@@ -1,3 +1,9 @@
+package players;
+import core.GameView;
+import core.Move;
+import core.Seed;
+import core.SuperBoard;
+
 
 public class HumanPlayer extends Player {
 	

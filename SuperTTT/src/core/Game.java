@@ -1,5 +1,9 @@
+package core;
 import java.util.ArrayList;
 import java.util.List;
+
+import players.Player;
+
 
 public class Game implements Runnable {
 	

@@ -1,5 +1,12 @@
+package players;
+
 import java.awt.List;
 import java.util.ArrayList;
+
+import core.ISeeded;
+import core.Move;
+import core.Seed;
+import core.SuperBoard;
 
 public class LucasPlayer extends Player {
 
