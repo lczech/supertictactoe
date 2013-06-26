@@ -61,7 +61,7 @@ public class Game implements Runnable {
 
 	@Override
 	public void run() {
-		while (board.isOpen() && board.getState() == Seed.N) {
+		while (!board.isFinished()) {
 			SuperBoard clone = board.getClone();
 			Move       move  = players[activeplayer].getMove(clone);
 			makeMove(move);

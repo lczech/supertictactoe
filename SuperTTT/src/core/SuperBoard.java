@@ -44,6 +44,10 @@ public class SuperBoard  {
 		return false;
 	}
 	
+	public boolean isFinished() {
+		return !(this.isOpen() && this.getState() == Seed.N);
+	}
+	
 	public Move getLastMove() {
 		return history.size()>0 ? history.get(history.size()-1) : null;
 	}
@@ -140,7 +144,7 @@ public class SuperBoard  {
 	public SuperBoard getClone() {
 		SuperBoard sb = new SuperBoard();
 		for (Move m : this.history) {
-			sb.makeMove(m, m.player);
+			sb.makeMove(new Move(m.SuperMove, m.SubMove), m.player);
 		}
 		return sb;
 	}
