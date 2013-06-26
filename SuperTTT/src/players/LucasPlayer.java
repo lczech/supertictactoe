@@ -92,11 +92,11 @@ public class LucasPlayer extends Player {
 		
 		ArrayList<Move> list = board.getPossibleMoves();
 		if (list.isEmpty() || depth == 0) {
-			score = this.scoreBoard(board.boards);
+			score = this.scoreBoard(board.getSubBoards());
 			return new int[] {score, bestSuper, bestSub};
 		} else {
 			for (Move m : list) {
-				board.game.makeMove(m);
+				board.makeMove(m, player);
 				
 				if (player == this.type) {
 					score = minimax(board, depth-1, this.opp, alpha, beta)[0];
@@ -114,7 +114,7 @@ public class LucasPlayer extends Player {
 					}
 				}
 
-				board.game.undoMove();
+				board.undoMove();
 				if (alpha >= beta) break;
 			}
 			

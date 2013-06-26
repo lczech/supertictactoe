@@ -2,8 +2,10 @@ package core;
 
 public class Move {
 	
-	public int SuperMove;
-	public int SubMove;
+	public Seed    player;
+	
+	public int     SuperMove;
+	public int     SubMove;
 	
 	public boolean wonSuper;
 	public boolean wonSub;

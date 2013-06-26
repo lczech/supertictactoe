@@ -4,9 +4,13 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 
@@ -16,6 +20,9 @@ import players.HumanPlayer;
 public class GameView extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
+	
+	public static BufferedImage imgX,imgO;
+	
 	public Color colorDefault  = Color.black;
 	public Color colorActive   = Color.red;
 	public Color colorInactive = Color.gray;
@@ -29,6 +36,14 @@ public class GameView extends JPanel {
 	}
 	
 	public GameView() {
+		try {
+			imgX = ImageIO.read(new File("X3.png"));
+			imgO = ImageIO.read(new File("O3.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		//this.board = board;
 		this.addMouseListener(new MouseAdapter() {
 			
@@ -71,14 +86,14 @@ public class GameView extends JPanel {
 		TTT.drawBoard(g, rect, this.colorDefault,true);
 		
 		Color c;
-		Move lastmove = this.game.getLastMove();
+		Move lastmove = this.game.getBoard().getLastMove();
 		Rectangle[] subrects = TTT.getSubrects(rect);
 		Rectangle[] subsubrects;
 		
 		for (int i=0;i<9;i++) {
-			if (this.game.board.getPossibleFields().contains(i)) {
+			if (this.game.getBoard().getPossibleFields().contains(i)) {
 				c = this.colorActive;
-			} else if (!this.game.board.boards[i].isOpen()) {
+			} else if (!this.game.getBoard().getSubBoard(i).isOpen()) {
 				c = this.colorInactive;
 			} else {
 				c = this.colorDefault;
@@ -92,13 +107,13 @@ public class GameView extends JPanel {
 				} else {
 					c = this.colorDefault;
 				}
-				TTT.drawState(g, subsubrects[j], this.game.board.boards[i].fields[j].getState(), c, 1);
+				TTT.drawState(g, subsubrects[j], this.game.getBoard().getSubBoard(i).getField(j).getState(), c, 1);
 			}
 			
-			TTT.drawState(g, subrects[i], this.game.board.boards[i].getState(), this.colorDefault, 2);
+			TTT.drawState(g, subrects[i], this.game.getBoard().getSubBoard(i).getState(), this.colorDefault, 2);
 		}
 		
-		TTT.drawState(g, rect, this.game.board.getState(), this.colorDefault, 3);
+		TTT.drawState(g, rect, this.game.getBoard().getState(), this.colorDefault, 3);
 	}
 
 }

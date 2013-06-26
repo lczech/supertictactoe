@@ -5,17 +5,13 @@ import java.util.List;
 
 public class SuperBoard  {
 	
-	public Game game;
+	private Seed state = Seed.N;
 	
-	private Seed state;
+	private SubBoard[] boards = new SubBoard[9];
 	
-	public SubBoard[] boards;
+	private List<Move> history = new ArrayList<Move>();
 
-	public SuperBoard(Game g) {
-		this.game = g;
-		this.state = Seed.N;
-		
-		this.boards = new SubBoard[9];
+	public SuperBoard() {
 		for (int i=0; i<9; i++) {
 			this.boards[i] = new SubBoard();
 		}
@@ -31,6 +27,14 @@ public class SuperBoard  {
 		return old;
 	}
 	
+	public SubBoard getSubBoard(int i) {
+		return this.boards[i];
+	}
+	
+	public SubBoard[] getSubBoards() {
+		return this.boards;
+	}
+	
 	public boolean isOpen() {
 		for (int i=0; i<9; i++) {
 			if(boards[i].isOpen()) {
@@ -40,6 +44,10 @@ public class SuperBoard  {
 		return false;
 	}
 	
+	public Move getLastMove() {
+		return history.size()>0 ? history.get(history.size()-1) : null;
+	}
+	
 	public ArrayList<Move> getPossibleMoves() {
 		ArrayList<Move> list = new ArrayList<Move>();
 		
@@ -47,12 +55,12 @@ public class SuperBoard  {
 			return list;
 		}
 		
-		if (this.game.history.size() == 0) {
+		if (this.history.size() == 0) {
 			for (int i=0; i<9; i++) {
 				boards[i].addMoves(list, i);
 			}
 		} else {
-			int s = this.game.getLastMove().SubMove;
+			int s = this.getLastMove().SubMove;
 			if (boards[s].isOpen()) {
 				boards[s].addMoves(list, s);
 			} else {
@@ -76,23 +84,28 @@ public class SuperBoard  {
 	}
 	
 	public boolean makeMove(Move move, Seed player) {
-		if (player == Seed.N) {
+		if (player == Seed.N || this.state != Seed.N) {
 			return false;
 		}
 		
 		for (Move m: getPossibleMoves()) {
 			if(move.equals(m)) {
-				System.out.println(player.toString() + " " + move.SuperMove + " " + move.SubMove);
+				//System.out.println(player.toString() + " " + move.SuperMove + " " + move.SubMove);
+				
+				move.player = player;
+				this.history.add(move);
 				
 				Seed ps = this.boards[move.SuperMove].getState();
-				this.boards[move.SuperMove].makeMove(move.SubMove, player);
+				if (!this.boards[move.SuperMove].makeMove(move.SubMove, player)) {
+					System.out.println("Weird error: move to (" + move.SuperMove + " " + move.SubMove + ") in list, but not possible");
+				}
 				
 				if (ps != this.boards[move.SuperMove].getState()) {
 					move.wonSub = true;
 				}
 				
-				if (this.state == Seed.N && TTT.isWon(boards, move.SuperMove, player)) {
-					System.out.println("SUPER WON SUPER WON SUPER WON");
+				if (TTT.isWon(boards, move.SuperMove, player)) {
+					//System.out.println("SUPER WON SUPER WON SUPER WON");
 					this.state = player;
 					move.wonSuper = true;
 				}
@@ -100,6 +113,36 @@ public class SuperBoard  {
 			}
 		}
 		return false;
+	}
+	
+	public boolean undoMove() {
+		Move move = this.getLastMove();
+		if (move==null) {
+			return false;
+		}
+		
+		//System.out.println("Undoing (" + move.SuperMove + " " + move.SubMove + ")");
+		
+		this.history.remove(this.history.size()-1);
+		this.boards[move.SuperMove].undoMove(move.SubMove);
+		
+		if (move.wonSub) {
+			this.boards[move.SuperMove].setState(Seed.N);
+		}
+		
+		if (move.wonSuper) {
+			this.setState(Seed.N);
+		}
+		
+		return true;
+	}
+	
+	public SuperBoard getClone() {
+		SuperBoard sb = new SuperBoard();
+		for (Move m : this.history) {
+			sb.makeMove(m, m.player);
+		}
+		return sb;
 	}
 	
 }

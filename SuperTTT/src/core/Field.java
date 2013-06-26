@@ -3,11 +3,7 @@ package core;
 
 public class Field implements ISeeded {
 	
-	private Seed state;
-	
-	public Field() {
-		this.state = Seed.N;
-	}
+	private Seed state = Seed.N;
 
 	@Override
 	public Seed getState() {

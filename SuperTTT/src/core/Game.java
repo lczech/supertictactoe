@@ -1,19 +1,13 @@
 package core;
-import java.util.ArrayList;
-import java.util.List;
-
 import players.Player;
-
 
 public class Game implements Runnable {
 	
-	SuperBoard board = new SuperBoard(this);
-	private GameView gview;
+	private SuperBoard board = new SuperBoard();
+	private GameView   gview;
 	
 	int activeplayer = 0;
 	Player[] players = new Player[2];
-	
-	public List<Move> history = new ArrayList<Move>();
 	
 	public Game(Player p1, Player p2) {
 		if (p1.type == Seed.X && p2.type == Seed.O
@@ -22,7 +16,12 @@ public class Game implements Runnable {
 			players[1] = p2;
 		} else {
 			System.out.println("Invalid player configuration.");
+			System.exit(0);
 		}
+	}
+	
+	public SuperBoard getBoard() {
+		return this.board;
 	}
 	
 	public void setBoardView(GameView bview) {
@@ -30,13 +29,15 @@ public class Game implements Runnable {
 		bview.setGame(this);
 	}
 	
-	public Move getLastMove() {
-		return history.size()>0? history.get(history.size()-1) : null;
-	}
-	
 	public void makeMove(Move move) {
 		if (board.makeMove(move, players[activeplayer].type)) {
-			this.history.add(move);
+			System.out.println(move.player.toString() + " " + move.SuperMove + " " + move.SubMove);
+			if (move.wonSub) {
+				System.out.println("WON WON WON");
+			}
+			if (move.wonSuper) {
+				System.out.println("SUPER WON SUPER WON SUPER WON");
+			}
 			
 			if (gview != null) {
 				gview.repaint();
@@ -49,28 +50,17 @@ public class Game implements Runnable {
 	}
 	
 	public void undoMove() {
-		Move move = this.getLastMove();
-		if (move!=null) {
-			System.out.println("Undoing (" + move.SuperMove + " " + move.SubMove + ")");
-			
-			this.board.boards[move.SuperMove].fields[move.SubMove].setState(Seed.N);
-			
-			if (move.wonSub) {
-				this.board.boards[move.SuperMove].setState(Seed.N);
-			}
-			
-			if (move.wonSuper) {
-				this.board.setState(Seed.N);
-			}
-			
-			this.history.remove(this.history.size()-1);
+		if (this.board.undoMove()) {
+			activeplayer = 1-activeplayer;
 		}
 	}
 
 	@Override
 	public void run() {
 		while (board.isOpen() && board.getState() == Seed.N) {
-			makeMove(players[activeplayer].getMove(board));
+			SuperBoard clone = board.getClone();
+			Move       move  = players[activeplayer].getMove(clone);
+			makeMove(move);
 		}
 		
 		if (board.getState() != Seed.N) {

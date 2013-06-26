@@ -2,12 +2,13 @@ package shell;
 
 import javax.swing.JFrame;
 
-import core.Constants;
 import core.Game;
 import core.GameView;
 import core.Seed;
 
 import players.HumanPlayer;
+import players.LucasPlayer;
+import players.MonteCarloPlayer;
 import players.Player;
 import players.RandomPlayer;
 
@@ -15,9 +16,9 @@ public class Main {
 	
 	static Game game;
 	
+	private static int numberOfGames = 10;
+	
 	public static void main(String[] args) {
-		Constants.init();
-		
 		final JFrame f = new JFrame();
 		f.setSize(500, 500);
 		f.setVisible(true);
@@ -29,12 +30,25 @@ public class Main {
 		//players[0] = new RandomPlayer(Seed.X);
 		//players[1] = new RandomPlayer(Seed.O);
 		//players[1] = new HumanPlayer(Seed.O, gview);
-		Player player1 = new RandomPlayer(Seed.O);//HumanPlayer(Seed.X, gview);
-		Player player2 = new RandomPlayer(Seed.X);
-
-		game = new Game(player1,player2);
-		game.setBoardView(gview);
-		game.run();
+		//Player player1 = new HumanPlayer(Seed.X, gview);
+		Player player1 = new RandomPlayer(Seed.X);
+		//Player player2 = new LucasPlayer(Seed.O);
+		Player player2 = new MonteCarloPlayer(Seed.O);
+		
+		int wonX=0, wonO=0, wonN=0;
+		for (int i=0; i<numberOfGames; i++) {
+			game = new Game(player1,player2);
+			game.setBoardView(gview);
+			game.run();
+			
+			switch (game.getBoard().getState()) {
+				case N: wonN++; break;
+				case X: wonX++; break;
+				case O: wonO++; break;
+			}
+		}
+		
+		System.out.println("Draw: " + wonN + ", X: " + wonX + ", O: " + wonO);
 	}
 	
 }

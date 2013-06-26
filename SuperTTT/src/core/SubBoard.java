@@ -5,14 +5,11 @@ import java.util.List;
 
 public class SubBoard implements ISeeded {
 	
-	private Seed state;
+	private Seed state = Seed.N;
 	
-	public Field[] fields;
+	private Field[] fields = new Field[9];
 	
 	public SubBoard() {
-		this.state = Seed.N;
-		
-		this.fields = new Field[9];
 		for (int i=0; i<9; i++) {
 			this.fields[i] = new Field();
 		}
@@ -28,6 +25,14 @@ public class SubBoard implements ISeeded {
 		Seed old = this.state;
 		this.state = s;
 		return old;
+	}
+	
+	public Field getField(int i) {
+		return this.fields[i];
+	}
+	
+	public Field[] getFields() {
+		return this.fields;
 	}
 	
 	public boolean isOpen() {
@@ -62,10 +67,19 @@ public class SubBoard implements ISeeded {
 			this.fields[field].setState(player);
 			
 			if(this.state == Seed.N && TTT.isWon(fields, field, player)) {
-				System.out.println("WON WON WON");
-				this.setState(player);
+				//System.out.println("WON WON WON");
+				this.state = player;
 			}
 			
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean undoMove(int field) {
+		if (this.fields[field].getState() != Seed.N) {
+			this.fields[field].setState(Seed.N);
 			return true;
 		} else {
 			return false;

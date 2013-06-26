@@ -116,12 +116,12 @@ public class TTT {
 		case X:
 			//g.drawLine(rect.x, rect.y, rect.x+rect.width, rect.y+rect.height);
 			//g.drawLine(rect.x+rect.width, rect.y, rect.x, rect.y+rect.height);
-			g.drawImage(Constants.imgX, rect.x, rect.y, rect.width, rect.height, null);
+			g.drawImage(GameView.imgX, rect.x, rect.y, rect.width, rect.height, null);
 			break;
 			
 		case O:
 			//g.drawOval(rect.x, rect.y, rect.width, rect.height);
-			g.drawImage(Constants.imgO, rect.x, rect.y, rect.width, rect.height, null);
+			g.drawImage(GameView.imgO, rect.x, rect.y, rect.width, rect.height, null);
 			break;
 
 		default:
