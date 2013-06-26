@@ -3,6 +3,8 @@ import players.Player;
 
 public class Game implements Runnable {
 	
+	private boolean    doPrint = false;
+	
 	private SuperBoard board = new SuperBoard();
 	private GameView   gview;
 	
@@ -31,12 +33,14 @@ public class Game implements Runnable {
 	
 	public void makeMove(Move move) {
 		if (board.makeMove(move, players[activeplayer].type)) {
-			System.out.println(move.player.toString() + " " + move.SuperMove + " " + move.SubMove);
-			if (move.wonSub) {
-				System.out.println("WON WON WON");
-			}
-			if (move.wonSuper) {
-				System.out.println("SUPER WON SUPER WON SUPER WON");
+			if (doPrint) {
+				System.out.println(move.player.toString() + " " + move.SuperMove + " " + move.SubMove);
+				if (move.wonSub) {
+					System.out.println("WON WON WON");
+				}
+				if (move.wonSuper) {
+					System.out.println("SUPER WON SUPER WON SUPER WON");
+				}
 			}
 			
 			if (gview != null) {
@@ -63,11 +67,13 @@ public class Game implements Runnable {
 			makeMove(move);
 		}
 		
-		if (board.getState() != Seed.N) {
-			System.out.println("WINNER: "+board.getState());
-		} else {
-			System.out.println("DRAW!");
-		}
+		//if (doPrint) {
+			if (board.getState() != Seed.N) {
+				System.out.println("WINNER: "+board.getState());
+			} else {
+				System.out.println("DRAW!");
+			}
+		//}
 	}
 	
 }

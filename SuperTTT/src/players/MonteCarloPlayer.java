@@ -54,7 +54,7 @@ public class MonteCarloPlayer extends Player {
 			runs++;
 		}
 		
-		//System.out.println("Did "+runs+" runs.");
+		System.out.println("Runs  "+runs);
 		
 		int maxv = Integer.MIN_VALUE;
 		int maxi = -1;

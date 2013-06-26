@@ -1,6 +1,5 @@
 package players;
 
-import java.awt.List;
 import java.util.ArrayList;
 
 import core.ISeeded;
@@ -9,23 +8,44 @@ import core.Seed;
 import core.SuperBoard;
 
 public class LucasPlayer extends Player {
+	
+	private int maxdepth = 8;
+	private int callcount;
 
 	public LucasPlayer(Seed t) {
 		super(t);
 	}
 	
-	private int fieldValue(int field) {
+	private int fieldValue(ISeeded[] board, int field) {
+		int val;
 		if(field%2==1) {
-			return 2;
+			val = 2;
 		} else if (field==4) {
-			return 4;
+			val = 4;
 		} else {
-			return 3;
+			val = 3;
+		}
+		
+		if (board[field].getState() == this.type) {
+			return val;
+		} else if (board[field].getState() == this.opp) {
+			return -val;
+		} else {
+			return 0;
 		}
 	}
 	
+	private int boardValue(ISeeded[] board) {
+		int sum = 0;
+		for (int i=0; i<board.length; i++) {
+			sum += fieldValue(board, i);
+		}
+		return sum;
+	}
+	
 	private int scoreLine(ISeeded[] board, int c1, int c2, int c3) {
-		int score = 0;
+		int score  = 0;
+		int factor = 10;
 		
 		if (board[c1].getState() == this.type) {
 			score = 1;
@@ -35,7 +55,7 @@ public class LucasPlayer extends Player {
 		
 		if (board[c2].getState() == this.type) {
 			if (score == 1) {
-				score *= 10;
+				score *= factor;
 			 } else if (score == -1) {
 				return 0;
 			 } else {
@@ -43,7 +63,7 @@ public class LucasPlayer extends Player {
 			 }
 		} else if (board[c2].getState() == this.opp) {
 			if (score == -1) {
-				score *= 10;
+				score *= factor;
 			 } else if (score == 1) {
 				return 0;
 			 } else {
@@ -53,7 +73,7 @@ public class LucasPlayer extends Player {
 		
 		if (board[c3].getState() == this.type) {
 			if (score > 0) {
-				score *= 10;
+				score *= factor;
 			 } else if (score < 0) {
 				return 0;
 			 } else {
@@ -61,7 +81,7 @@ public class LucasPlayer extends Player {
 			 }
 		} else if (board[c3].getState() == this.opp) {
 			if (score < 0) {
-				score *= 10;
+				score *= factor;
 			 } else if (score > 1) {
 				return 0;
 			 } else {
@@ -85,14 +105,30 @@ public class LucasPlayer extends Player {
 		return score;
 	}
 	
+	private int score (SuperBoard board) {
+		int score = 0;
+		score += this.scoreBoard(board.getSubBoards());
+		score += this.boardValue(board.getSubBoards());
+		score *= 10000;
+		
+		for (int i=0; i<board.getSubBoards().length; i++) {
+			score += this.scoreBoard(board.getSubBoard(i).getFields());
+			score += this.boardValue(board.getSubBoard(i).getFields());
+		}
+		
+		return score;
+	}
+	
 	private int[] minimax(SuperBoard board, int depth, Seed player, int alpha, int beta) {
+		this.callcount++;
+		
 		int score;
 		int bestSuper = -1;
 		int bestSub   = -1;
 		
 		ArrayList<Move> list = board.getPossibleMoves();
 		if (list.isEmpty() || depth == 0) {
-			score = this.scoreBoard(board.getSubBoards());
+			score = this.score(board);
 			return new int[] {score, bestSuper, bestSub};
 		} else {
 			for (Move m : list) {
@@ -124,7 +160,10 @@ public class LucasPlayer extends Player {
 
 	@Override
 	public Move getMove(SuperBoard board) {
-		int[] result = minimax(board, 4, this.type, Integer.MIN_VALUE, Integer.MAX_VALUE);
+		this.callcount = 0;
+		int[] result = minimax(board, this.maxdepth, this.type, Integer.MIN_VALUE, Integer.MAX_VALUE);
+		
+		System.out.println("Calls "+this.callcount);
 		return new Move(result[1], result[2]);
 	}
 

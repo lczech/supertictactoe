@@ -27,13 +27,15 @@ public class Main {
 		GameView gview = new GameView();
 		f.add(gview);
 		
-		//players[0] = new RandomPlayer(Seed.X);
-		//players[1] = new RandomPlayer(Seed.O);
-		//players[1] = new HumanPlayer(Seed.O, gview);
 		//Player player1 = new HumanPlayer(Seed.X, gview);
-		Player player1 = new RandomPlayer(Seed.X);
-		//Player player2 = new LucasPlayer(Seed.O);
-		Player player2 = new MonteCarloPlayer(Seed.O);
+		//Player player1 = new LucasPlayer(Seed.X);
+		Player player1 = new MonteCarloPlayer(Seed.X);
+		//Player player1 = new RandomPlayer(Seed.X);
+		
+		//Player player2 = new HumanPlayer(Seed.O, gview);
+		Player player2 = new LucasPlayer(Seed.O);
+		//Player player2 = new MonteCarloPlayer(Seed.O);
+		//Player player2 = new RandomPlayer(Seed.O);
 		
 		int wonX=0, wonO=0, wonN=0;
 		for (int i=0; i<numberOfGames; i++) {
